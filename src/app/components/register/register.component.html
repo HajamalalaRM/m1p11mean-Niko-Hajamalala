@@ -1,0 +1,96 @@
+<br/>
+
+<div class="container">
+   <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
+         <div class="card text text  bg-white">
+            <div class="card-header">
+               <h6 style="float: left;">REGISTER</h6>
+            </div>
+            <div class="card-body"><br/>
+               <div class="row">
+                  <div class="col-md-4"></div>
+                  <div class="col-md-4">
+                     <h5 class="card-title" style="text-align: center;">MAGNIFICIENCE</h5>
+                     <p class="card-text" style="text-align: center;">Beauty salon.</p>
+                  </div>
+                  <div class="col-md-4"></div>
+               </div><br/>
+               <div class="row">
+                  <!-- PASSWORD AND REPEAT NOT EQUALS -->
+                  <div class="col-md-6" *ngIf="errorMessage === 'not_equals'" style="text-align:center;" class="alert alert-danger" role="alert">
+                     Password and repeat password must be equals
+                  </div><br/>
+                  <!-- REGISTER SUCCESSFUL -->
+                  <div class="col-md-6" *ngIf="errorMessage === 'register_success'" style="text-align:center;" class="alert alert-success" role="alert">
+                     Your registration is complete
+                  </div>
+               </div>
+               <br/>
+   
+               <form (ngSubmit)="onSubmit()">
+                  <div class="row">
+                     <div class="col-md-1"></div>
+                     <div class="col-md-5">
+                        <h6 for="inputName">Name :</h6>
+                        <input type="yegtuol;.64ut,jtext" [(ngModel)]="name" name="name" class="form-control" placeholder="Enter your name..." id="inputName">
+                        <div style="text-align: center;"><span *ngIf="errorMessage === 'need_complete' && name===''" style="color: red;"> ( * required)</span></div>
+                     </div>
+                     <div class="col-md-5">
+                        <h6 for="inputName">Firstname :</h6>
+                        <input type="text" [(ngModel)]="firstname" name="firstname" class="form-control" placeholder="Enter your firstname..." id="inputFirstname">
+                        <div style="text-align: 
+                        center;"><span *ngIf="errorMessage === 'need_complete' && firstname===''" style="color: red;">( * required)</span></div>
+                     </div>
+                     <div class="col-md-1"></div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-1"></div>
+                     <div class="col-md-5"><br/>
+                        <h6 for="inputEmail">Email</h6>
+                        <input type="email" [(ngModel)]="email" name="email" class="form-control" placeholder="Enter your email..." id="inputEmail">
+                        <div style="text-align: center;"><span *ngIf="errorMessage === 'need_complete' && email===''" style="color: red;">( * required)</span></div>
+                     </div>
+                     <div class="col-md-5"><br/>
+                        <h6 for="inputContact">Contact</h6>
+                        <input type="text" [(ngModel)]="contact" name="contact" class="form-control" placeholder="Enter your contact..." id="inputContact">
+                        <div style="text-align: center;"><span *ngIf="errorMessage === 'need_complete' && contact===''" style="color: red;">( * required)</span></div>
+                     </div>
+                     <div class="col-md-1"></div>
+                     
+                     <!-- <div class="col-md-4"><br/>
+                        <label for="inputRole">Role
+                           <span *ngIf="role===''" style="color: red;">( * required)</span>
+                        </label>
+                        <select id="inputRole" [(ngModel)]="role" name="role" class="form-control">
+                           <option value="" selected>Choose the role...</option>
+                           <option>Client</option>
+                           <option>Employe</option>
+                           <option>Manager</option>
+                        </select>
+                     </div> -->
+                     
+                  </div><br/>
+                  <div class="row">
+                     <div class="col-md-1"></div>
+                     <div class="form-group col-md-5">
+                        <h6 for="inputPassword">Password</h6>
+                        <input type="password" [(ngModel)]="password" name="password" class="form-control" placeholder="Enter your password..." id="inputPassword">
+                        <div style="text-align: center;"><span *ngIf="errorMessage === 'need_complete' && password===''" style="color: red;">( * required)</span></div>
+                     </div>
+                     <div class="form-group col-md-5">
+                        <h6 for="inputConfirmPassword">Confirm Password</h6>
+                        <input type="password" [(ngModel)]="confirmpassword" name="confirmpassword" class="form-control" placeholder="Confirm your password..." id="inputConfirmPassword">
+                        <div style="text-align: center;"><span *ngIf="errorMessage === 'need_complete' && confirmpassword===''" style="color: red;">( * required)</span></div>
+                     </div>
+                     <div class="col-md-1"></div>
+                  </div><br/>
+                  <button type="submit" style="float: right; width: 200px;" class="btn btn-success" >Sign up</button>
+                  <br/>
+                  <a routerLink="/login">Cancel</a>
+               </form>
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+</div>

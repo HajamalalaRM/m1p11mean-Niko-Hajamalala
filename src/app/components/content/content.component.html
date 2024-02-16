@@ -1,0 +1,25 @@
+
+<!-- HOME -->
+<div *ngIf="isRoute==='home'">
+   <h1>WELCOME AT HOME</h1>
+</div>
+
+<!-- MEETINGS -->
+<div *ngIf="isRoute==='meetings'">
+   <app-meeting></app-meeting>
+</div>
+
+<!-- NOTIFICATIONS -->
+<div *ngIf="isRoute==='notifications'">
+   <app-notification></app-notification>
+</div>
+
+<!-- PREFERENCES -->
+<div *ngIf="isRoute==='preferences'">
+   <app-preference></app-preference>
+</div>
+
+<!-- SERVICES  -->
+<div *ngIf="isRoute==='services'">
+   <app-service></app-service>
+</div>
