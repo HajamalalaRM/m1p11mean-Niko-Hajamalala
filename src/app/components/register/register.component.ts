@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -35,19 +35,6 @@ export class RegisterComponent implements OnInit {
     console.log("PASSWORD : "+this.password);
     console.log("CONFIRM-PASSWORD : "+this.confirmpassword);
 
-    if(this.name==="" || this.firstname==="" || this.email==="" || this.password==="" || this.confirmpassword==="" || this.contact===""){
-      this.errorMessage = 'need_complete';
-      this.router.navigateByUrl('/register');
-    } else {
-      this.errorMessage = 'wrong_message';
-      this.router.navigateByUrl('/register');
-    }
-
-    if(this.password!==this.confirmpassword){
-      this.errorMessage = 'not_equals';
-      this.router.navigateByUrl('/register');
-    }
-
     const credentials = {
       name: this.email,
       firstname: this.firstname,
@@ -57,13 +44,30 @@ export class RegisterComponent implements OnInit {
       role: this.role
     }
 
-    this.http.post(`${this.baseUrl.getBaseUrl()}/signup`, credentials)
-    .subscribe((data: any) => {
-      console.log(data.acknowledged);
-      console.log(data);
-      this.errorMessage = 'register_success';
+    if(this.name==="" || this.firstname==="" || this.email==="" || this.password==="" || this.confirmpassword==="" || this.contact===""){
+      this.errorMessage = 'need_complete';
+      console.log(this.errorMessage)
       this.router.navigateByUrl('/register');
-    })
+      
+    } else {
+      if(this.password.length < 8){
+        this.errorMessage = 'password_inferior';
+        this.router.navigateByUrl('/register');
+      } else {
+        if(this.password!==this.confirmpassword){
+          this.errorMessage = 'not_equals';
+          this.router.navigateByUrl('/register');
+        } else {
+
+          this.http.post(`${this.baseUrl.getBaseUrl()}/users/signup`, credentials, {
+            headers: new HttpHeaders().set('Content-Type','application/json')})
+          .subscribe((data: any) => {
+            localStorage.setItem("local", data.insertedId);
+            this.router.navigateByUrl('/home');
+          })
+        }
+      }
+    }
   }
 
   ngOnInit(): void {

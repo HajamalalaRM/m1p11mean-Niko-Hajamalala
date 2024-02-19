@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit{
   password: string ="";
   errorMessage: string="";
   isSubmited: boolean = false;
+  date: string="";
   
 
   constructor(private baseUrl: BaseUrl, private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute){}
@@ -33,14 +34,16 @@ export class LoginComponent implements OnInit{
     console.log("PASSWORD : "+this.password);
     const credentials = { email: this.email, password: this.password}
     
-    
+    // isconnected
+    this.user_is_in_local();
+    // isconnected
+    console.log("ETOOOOO...")
     if(this.email === "" || this.password === ""){
       this.errorMessage = 'need_complete';
-      this.user_is_in_local();
       this.router.navigateByUrl('/login');
     } else {
 
-      this.http.post(`${this.baseUrl.getBaseUrl()}/signin`, credentials, {
+      this.http.post(`${this.baseUrl.getBaseUrl()}/users/signin`, credentials, {
         headers: new HttpHeaders().set('Content-Type', 'application/json')})
       .subscribe((data: any) => {
   
@@ -63,6 +66,7 @@ export class LoginComponent implements OnInit{
 
   user_is_in_local() {
     const local = localStorage.getItem('local');
+    console.log("ETOOO KOOOOOO")
 
     if(local!==null){
       this.http.get(`${this.baseUrl.getBaseUrl()}/user/`+local, {
@@ -70,12 +74,12 @@ export class LoginComponent implements OnInit{
       .subscribe((data: any) => {
         console.log(JSON.stringify(data));
   
-        if(data._id!==undefined){
+        if(data.id!==undefined){
           console.log("OKAY IS PRESENT......")
-          localStorage.setItem("local", data._id);
+          localStorage.setItem("local", data.id);
           this.router.navigateByUrl('/home');
         } else {
-          console.log("WTFUCK....");
+          console.log("WTF....");
           localStorage.removeItem("local");
           this.router.navigateByUrl('/login');
         }

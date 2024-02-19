@@ -9,6 +9,17 @@
             <div class="card-body">
                <app-header></app-header><br/>
                <app-content></app-content>
+               <br/>
+               <form (ngSubmit)="test_appointment()"  method="post">
+                  <!-- <input type="hidden" [(ngModel)]="userClientId" value="{{l}}" name="userClientId"> -->
+                  <select>
+                     <option *ngFor="let user of users2" [(ngModel)]="userEmpId" name="userEmpId" value="{{user['_id']}}">{{user['name']}}</option>
+                  </select>
+                  <br/>
+                  <p *ngFor="let service of services">{{service['name']}}
+                     <input type="checkbox" (change)="onChange('{{service['_id']}}', $event.target.checked)"  [(ngModel)]="checkedValues.includes('{{service['_id']}}')" name="servicesId" value="{{service['_id']}}">
+                  </p>
+               </form>
             </div><br/>
             <app-footer></app-footer>
          </div><br/><br/>

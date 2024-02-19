@@ -20,12 +20,16 @@
                <div class="row">
                   <!-- PASSWORD AND REPEAT NOT EQUALS -->
                   <div class="col-md-6" *ngIf="errorMessage === 'not_equals'" style="text-align:center;" class="alert alert-danger" role="alert">
-                     Password and repeat password must be equals
-                  </div><br/>
-                  <!-- REGISTER SUCCESSFUL -->
-                  <div class="col-md-6" *ngIf="errorMessage === 'register_success'" style="text-align:center;" class="alert alert-success" role="alert">
-                     Your registration is complete
+                     Password and repeat password must be equals<br/>
                   </div>
+                  <!-- PASSWORD IS LOWER OR INFERIOR -->
+                  <div class="col-md-6" *ngIf="errorMessage === 'password_inferior'" style="text-align:center;" class="alert alert-danger" role="alert">
+                     Password not be lower than 8 caracters<br/>
+                  </div>
+                  <!-- REGISTER SUCCESSFUL -->
+                  <!-- <div class="col-md-6" *ngIf="errorMessage === 'register_success'" style="text-align:center;" class="alert alert-success" role="alert">
+                     Your registration is complete
+                  </div> -->
                </div>
                <br/>
    
