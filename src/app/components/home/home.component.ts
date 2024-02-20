@@ -8,6 +8,7 @@ import { FooterComponent } from '../footer/footer.component';
 import { HeaderComponent } from '../header/header.component';
 import { LoginComponent } from '../login/login.component';
 import { NotificationComponent } from '../notification/notification.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -22,11 +23,12 @@ export class HomeComponent implements OnInit{
   userId: string = "";
   errorMessage: string="";
   services: [] = [];
-  users2: [] = [];
+  employes: [] = [];
 
   checkedValues: string[]=[];
   userClientId: string = "";
-  userEmptId: string = "";
+  userEmpId:string = "";
+  dateAppoint: string = "";
 
   constructor(
     private loginService: LoginComponent, 
@@ -35,28 +37,46 @@ export class HomeComponent implements OnInit{
     private router: Router, 
     private activatedRoute: ActivatedRoute){}
 
-  onChange(value: string, isChecked: boolean){
-    if(isChecked){
-      this.checkedValues.push(value);
+
+test_appointment(){  
+  let userClientId = localStorage.getItem('local')?.toString();  
+  console.log(userClientId);
+  let status = "in progress";
+  let description = "Birthday party";
+
+  const credentials = {servicesId:this.checkedValues,userClientId:userClientId,userEmpId:this.userEmpId,datetime:this.dateAppoint, status:status, description:description}
+    this.http.post(`${this.baseUrl.getBaseUrl()}/appointments/test`, credentials, {
+      headers: new HttpHeaders().set('Content-Type', 'application/json')})
+    .subscribe((data: any) => {
+      console.log()
+    })
+  // this.router.navigateByUrl('/login');
+}
+onChangeDate(date: string){
+  this.dateAppoint = date;
+}
+  onChangeEmp(str: string){    
+    console.log("STRRRR : "+str)
+    this.userEmpId = str
+  }
+  onChange(event: any,serviceId: any){
+    // console.log("CHANGED: "+serviceId)
+    console.log("List: "+this.checkedValues)
+    if(event.target.checked){
+      this.checkedValues.push(serviceId);
     } else {
-      const index = this.checkedValues.indexOf(value);
+      const index = this.checkedValues.indexOf(serviceId);
       if(index !== -1){
         this.checkedValues.splice(index, 1);
       }
     }
   }
 
-  test_appointment(){
-    console.log(this.checkedValues);
-    console.log(this.userClientId);
-    console.log(this.userEmptId);
-  }
-
   ngOnInit(): void {
 
     const localId = localStorage.getItem('local');
     if(localId!==null){
-      this.userId = JSON.parse(localId);
+      // this.userId = JSON.parse(localId);
     }
 
     this.http.get(`${this.baseUrl.getBaseUrl()}/services/list`, {
@@ -64,6 +84,7 @@ export class HomeComponent implements OnInit{
     .subscribe((data: any) => {
       // console.log(JSON.stringify(data));
       this.services = data.services;
+      console.log("SERVICES")
       console.log(this.services);
       // console.log(JSON.stringify(this.users))
       // this.router.navigateByUrl('/appointments/employes?date='+this.date+"&time="+this.time);
@@ -73,36 +94,21 @@ export class HomeComponent implements OnInit{
       headers: new HttpHeaders().set('Content-Type', 'application/json')})
     .subscribe((data: any) => {
       // console.log(JSON.stringify(data));
-      this.users2 = data.users;
-      console.log(this.users2);
+      this.employes = data.users;
+      // console.log("employes: "+this.employes);
       // console.log(JSON.stringify(this.users))
       // this.router.navigateByUrl('/appointments/employes?date='+this.date+"&time="+this.time);
     })    
 
-    console.log("LOCALLLLL..... "+localStorage.getItem('local'));
+    // console.log("LOCALLLLL..... "+localStorage.getItem('local'));
     const local = localStorage.getItem('local');
 
     if(localStorage.getItem('local')===null){
-      console.log("LOCAL IS NULL")
+      // console.log("LOCAL IS NULL")
       this.router.navigateByUrl('/login'); 
 
     } else {
-      console.log("OKAY LOCAL")
-      this.http.get(`${this.baseUrl.getBaseUrl()}/user/`+local, {
-        headers: new HttpHeaders().set('Content-Type', 'application/json')})
-      .subscribe((data: any) => {
-        console.log(JSON.stringify(data));
-  
-        if(data.id!==undefined){
-          console.log("OKAY IS PRESENT......")
-          // localStorage.setItem("local", data.id);
-          // this.router.navigateByUrl('/home');
-        } else {
-          console.log("WTFUCK....");
-          localStorage.removeItem("local");
-          this.router.navigateByUrl('/login');
-        }
-      })
+      // console.log("OKAY LOCAL")      
     }
     
   }

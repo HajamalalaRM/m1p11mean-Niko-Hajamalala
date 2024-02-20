@@ -30,14 +30,14 @@ export class LoginComponent implements OnInit{
   
   onSubmit(){
     // debugger
-    console.log("EMAIL : "+this.email);
-    console.log("PASSWORD : "+this.password);
+    // console.log("EMAIL : "+this.email);
+    // console.log("PASSWORD : "+this.password);
     const credentials = { email: this.email, password: this.password}
     
     // isconnected
     this.user_is_in_local();
     // isconnected
-    console.log("ETOOOOO...")
+    // console.log("ETOOOOO...")
     if(this.email === "" || this.password === ""){
       this.errorMessage = 'need_complete';
       this.router.navigateByUrl('/login');
@@ -66,27 +66,27 @@ export class LoginComponent implements OnInit{
 
   user_is_in_local() {
     const local = localStorage.getItem('local');
-    console.log("ETOOO KOOOOOO")
+    // console.log("ETOOO KOOOOOO")
 
-    if(local!==null){
-      this.http.get(`${this.baseUrl.getBaseUrl()}/user/`+local, {
-        headers: new HttpHeaders().set('Content-Type', 'application/json')})
-      .subscribe((data: any) => {
-        console.log(JSON.stringify(data));
+    // if(local!==null){
+    //   this.http.get(`${this.baseUrl.getBaseUrl()}/users/`+local, {
+    //     headers: new HttpHeaders().set('Content-Type', 'application/json')})
+    //   .subscribe((data: any) => {
+    //     // console.log(JSON.stringify(data));
   
-        if(data.id!==undefined){
-          console.log("OKAY IS PRESENT......")
-          localStorage.setItem("local", data.id);
-          this.router.navigateByUrl('/home');
-        } else {
-          console.log("WTF....");
-          localStorage.removeItem("local");
-          this.router.navigateByUrl('/login');
-        }
-      })
-    } else {
-      this.router.navigateByUrl('/login');
-    }
+    //     if(data.id!==undefined){
+    //       // console.log("OKAY IS PRESENT......")
+    //       localStorage.setItem("local", data.id);
+    //       this.router.navigateByUrl('/home');
+    //     } else {
+    //       // console.log("WTF....");
+    //       localStorage.removeItem("local");
+    //       this.router.navigateByUrl('/login');
+    //     }
+    //   })
+    // } else {
+    //   this.router.navigateByUrl('/login');
+    // }
   }
 
   ngOnInit(): void {

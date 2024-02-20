@@ -8,17 +8,43 @@
             </div>
             <div class="card-body">
                <app-header></app-header><br/>
-               <app-content></app-content>
+               <!-- <app-content></app-content> -->
                <br/>
-               <form (ngSubmit)="test_appointment()"  method="post">
-                  <!-- <input type="hidden" [(ngModel)]="userClientId" value="{{l}}" name="userClientId"> -->
-                  <select>
-                     <option *ngFor="let user of users2" [(ngModel)]="userEmpId" name="userEmpId" value="{{user['_id']}}">{{user['name']}}</option>
+               <form method="post">
+                  <select 
+                     #selectElement 
+                     name="userEmpId" 
+                     (change)="onChangeEmp(selectElement.value)"
+                  >
+                     <option 
+                        *ngFor="let employe of employes" 
+                        [value]="employe['_id']"  
+                        name="userEmpId" 
+                     >                        
+                        {{employe['name']}}
+                     </option>
                   </select>
                   <br/>
+
                   <p *ngFor="let service of services">{{service['name']}}
-                     <input type="checkbox" (change)="onChange('{{service['_id']}}', $event.target.checked)"  [(ngModel)]="checkedValues.includes('{{service['_id']}}')" name="servicesId" value="{{service['_id']}}">
+                     <input 
+                        type="checkbox" 
+                        (change)="onChange($event, service['_id'])" 
+                        [checked]="checkedValues.includes(service['_id'])" 
+                        [value]="service['_id']"
+                        name="servicesId">
                   </p>
+                  <p>
+                     <input 
+                        #selectedDate
+                        type="datetime-local" 
+                        name="dateAppoint" 
+                        (change)="onChangeDate(selectedDate.value)" >
+                  </p>
+
+                  <div class="form-group">
+                     <button type="submit" style="width: 300px;" (click)="test_appointment()" class="btn btn-secondary">tester</button>
+                   </div>
                </form>
             </div><br/>
             <app-footer></app-footer>

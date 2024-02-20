@@ -42,10 +42,10 @@ export class ContentComponent implements OnInit {
 
   // APPOINTMENTS
   getEmployNotBusy(){
-    console.log("DATE = "+this.date);
-    console.log("TIME = "+this.time);
+    // console.log("DATE = "+this.date);
+    // console.log("TIME = "+this.time);
     if(this.date ==="" || this.time ===""){
-      console.log('You must be given the date and time..');
+      // console.log('You must be given the date and time..');
       this.errorMessage = "need_complete_date_&time";
       this.router.navigateByUrl('/appointments');
     } else {
@@ -67,11 +67,11 @@ export class ContentComponent implements OnInit {
 
   // SERVICES
   showListServices(id: string, name: string, firstname: string){
-    console.log("WELCOME AT SERVICES FUNCTION")
-    console.log("IDDDD === "+id);
-    console.log(this.route.snapshot.queryParams['date']);
-    console.log(this.route.snapshot.queryParams['time']);
-    console.log(this.route.snapshot);
+    // console.log("WELCOME AT SERVICES FUNCTION")
+    // console.log("IDDDD === "+id);
+    // console.log(this.route.snapshot.queryParams['date']);
+    // console.log(this.route.snapshot.queryParams['time']);
+    // console.log(this.route.snapshot);
    
     this.router.navigateByUrl('/appointments/employes?date='+
     this.route.snapshot.queryParams['date']+"&time="+
@@ -81,24 +81,24 @@ export class ContentComponent implements OnInit {
   ngOnInit(): void {
 
       // //GET LIST EMPLOYES
-      this.http.get(`${this.baseUrl.getBaseUrl()}/utilisateurs`, {
-        headers: new HttpHeaders().set('Content-Type', 'application/json')})
-      .subscribe((data: any) => {
-        // console.log(JSON.stringify(data));
-        this.users = data;
-        console.log(this.users);
-        // console.log(JSON.stringify(this.users))
-        // this.router.navigateByUrl('/appointments/employes?date='+this.date+"&time="+this.time);
-      })  
+      // this.http.get(`${this.baseUrl.getBaseUrl()}/users`, {
+      //   headers: new HttpHeaders().set('Content-Type', 'application/json')})
+      // .subscribe((data: any) => {
+      //   // console.log(JSON.stringify(data));
+      //   this.users = data;
+      //   // console.log(this.users);
+      //   // console.log(JSON.stringify(this.users))
+      //   // this.router.navigateByUrl('/appointments/employes?date='+this.date+"&time="+this.time);
+      // })  
 
-    console.log(this.route.snapshot.queryParams['date']);
-    console.log(this.route.snapshot.queryParams['time']);
-    console.log(this.route.snapshot.routeConfig?.path);
-    console.log(this.route.snapshot.params['idea']);
+    // console.log(this.route.snapshot.queryParams['date']);
+    // console.log(this.route.snapshot.queryParams['time']);
+    // console.log(this.route.snapshot.routeConfig?.path);
+    // console.log(this.route.snapshot.params['idea']);
 
     this.route.url.subscribe(urlSegment => {
-      console.log("SEG /0 = "+urlSegment[0]);
-      console.log("SEG /1 = "+urlSegment[1]);
+      // console.log("SEG /0 = "+urlSegment[0]);
+      // console.log("SEG /1 = "+urlSegment[1]);
       
       if(urlSegment[urlSegment.length - 1].path === 'appointments'){
         this.isRoute = urlSegment[urlSegment.length - 1].path;
