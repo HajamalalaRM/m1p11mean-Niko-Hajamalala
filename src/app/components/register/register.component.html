@@ -63,18 +63,6 @@
                      </div>
                      <div class="col-md-1"></div>
                      
-                     <!-- <div class="col-md-4"><br/>
-                        <label for="inputRole">Role
-                           <span *ngIf="role===''" style="color: red;">( * required)</span>
-                        </label>
-                        <select id="inputRole" [(ngModel)]="role" name="role" class="form-control">
-                           <option value="" selected>Choose the role...</option>
-                           <option>Client</option>
-                           <option>Employe</option>
-                           <option>Manager</option>
-                        </select>
-                     </div> -->
-                     
                   </div><br/>
                   <div class="row">
                      <div class="col-md-1"></div>
@@ -90,9 +78,13 @@
                      </div>
                      <div class="col-md-1"></div>
                   </div><br/>
-                  <button type="submit" style="float: right; width: 200px;" class="btn btn-success" >Sign up</button>
-                  <br/>
-                  <a routerLink="/login">Cancel</a>
+
+                  <div class="row" style="float: right;">
+                     <div>
+                        <button type="submit" class="btn btn-success mr-2">Sign up</button>
+                        <button routerLink="/login" class="btn btn-light">Cancel</button>
+                     </div>
+                  </div>
                </form>
       </div>
       <div class="col-md-2"></div>

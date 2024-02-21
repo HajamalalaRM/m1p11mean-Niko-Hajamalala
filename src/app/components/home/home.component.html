@@ -7,47 +7,15 @@
                <h6 style="float: left;">MAGNIFICIENCE</h6>
             </div>
             <div class="card-body">
-               <app-header></app-header><br/>
-               <!-- <app-content></app-content> -->
+               
+               <app-header></app-header>
                <br/>
-               <form method="post">
-                  <select 
-                     #selectElement 
-                     name="userEmpId" 
-                     (change)="onChangeEmp(selectElement.value)"
-                  >
-                     <option 
-                        *ngFor="let employe of employes" 
-                        [value]="employe['_id']"  
-                        name="userEmpId" 
-                     >                        
-                        {{employe['name']}}
-                     </option>
-                  </select>
-                  <br/>
-
-                  <p *ngFor="let service of services">{{service['name']}}
-                     <input 
-                        type="checkbox" 
-                        (change)="onChange($event, service['_id'])" 
-                        [checked]="checkedValues.includes(service['_id'])" 
-                        [value]="service['_id']"
-                        name="servicesId">
-                  </p>
-                  <p>
-                     <input 
-                        #selectedDate
-                        type="datetime-local" 
-                        name="dateAppoint" 
-                        (change)="onChangeDate(selectedDate.value)" >
-                  </p>
-
-                  <div class="form-group">
-                     <button type="submit" style="width: 300px;" (click)="test_appointment()" class="btn btn-secondary">tester</button>
-                   </div>
-               </form>
-            </div><br/>
-            <app-footer></app-footer>
-         </div><br/><br/>
+               <app-content></app-content>
+            <br/>   
+         </div>
+         
+         <app-footer></app-footer>
+            
+      </div><br/><br/>
    </div>
 </div>

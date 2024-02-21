@@ -14,7 +14,7 @@ import { ServiceComponent } from '../service/service.component';
 @Component({
   selector: 'app-content',
   standalone: true,
-  imports: [NgIf, NgFor, RouterLink, FormsModule, NotificationComponent, ServiceComponent, PreferenceComponent],
+  imports: [NgIf, NgFor, FormsModule, RouterLink, NotificationComponent, ServiceComponent, PreferenceComponent],
   templateUrl: './content.component.html',
   styleUrl: './content.component.css'
 })
@@ -27,11 +27,18 @@ export class ContentComponent implements OnInit {
 
   isRoute: string = '';
   urlList: string = '';
-  date: string = "";
-  time: string = "";
   errorMessage: string = "";
   isSubmit: boolean = false;
-  users: [] = [];
+  
+  employes: [] = [];
+  services: [] = [];
+  appointments: [] = [];
+  checkedValues: string[]=[];
+
+  userEmpId: string = "";
+  servicesId: string = "";
+  datetime: string = "";
+  description: string = "";
 
   constructor( 
     private route: ActivatedRoute,
@@ -41,55 +48,79 @@ export class ContentComponent implements OnInit {
   
 
   // APPOINTMENTS
+
+  // LIST OF EMPLOYES
+  getListEmployes(){
+    this.http.get(`${this.baseUrl.getBaseUrl()}/users/employes`, {
+      headers: new HttpHeaders().set('Content-Type', 'application/json')})
+    .subscribe((data: any) => {
+      this.employes = data.users;
+      console.log(JSON.stringify(this.employes));
+    })
+  }
+
+  // LIST OF SERVICES
+  getListServices(){
+    this.http.get(`${this.baseUrl.getBaseUrl()}/services/list`, {
+      headers: new HttpHeaders().set('Content-Type', 'application/json')})
+    .subscribe((data: any) => {
+      this.services = data.services;
+      console.log(JSON.stringify(this.services));
+    })
+  }
+
+  getListOfAppointments(){
+    this.http.get(`${this.baseUrl.getBaseUrl()}/appointments`, {
+      headers: new HttpHeaders().set('Content-Type', 'application/json')})
+    .subscribe((data: any) => {
+      this.appointments = data.services;
+      console.log(JSON.stringify(this.appointments));
+    })
+  }
+
   getEmployNotBusy(){
-    // console.log("DATE = "+this.date);
-    // console.log("TIME = "+this.time);
-    if(this.date ==="" || this.time ===""){
-      // console.log('You must be given the date and time..');
-      this.errorMessage = "need_complete_date_&time";
-      this.router.navigateByUrl('/appointments');
+    this.getListEmployes();
+    this.getListServices();
+  }
+
+  onChangeEmp(str: string){ this.userEmpId = str }
+  onChangeDescription(description: string){ this.description = description; }
+  onChangeService(event: any, serviceId: any){
+    if(event.target.checked){
+      this.checkedValues.push(serviceId);
     } else {
-      this.isSubmit = true;
-
-      // //GET LIST EMPLOYES
-    // this.http.get(`${this.baseUrl.getBaseUrl()}/utilisateurs`, {
-    //   headers: new HttpHeaders().set('Content-Type', 'application/json')})
-    // .subscribe((data: any) => {
-    //   // console.log(JSON.stringify(data));
-    //   this.users = data;
-    //   console.log(this.users);
-    //   // console.log(JSON.stringify(this.users))
-      this.router.navigateByUrl('/appointments/employes?date='+this.date+"&time="+this.time);
-    // })      
-
+      const index = this.checkedValues.indexOf(serviceId);
+      if(index !== -1){
+        this.checkedValues.splice(index, 1);
+        console.log(this.checkedValues.splice(index, 1))
+      }
     }
   }
 
-  // SERVICES
-  showListServices(id: string, name: string, firstname: string){
-    // console.log("WELCOME AT SERVICES FUNCTION")
-    // console.log("IDDDD === "+id);
-    // console.log(this.route.snapshot.queryParams['date']);
-    // console.log(this.route.snapshot.queryParams['time']);
-    // console.log(this.route.snapshot);
-   
-    this.router.navigateByUrl('/appointments/employes?date='+
-    this.route.snapshot.queryParams['date']+"&time="+
-    this.route.snapshot.queryParams['time']+'&name='+name+'&firstname='+firstname+'&id='+id);
+  add_appointment(){
+    let userClientId = localStorage.getItem('local')?.toString();  
+    let status = "in progress";
+    // let description = "Birthday party";
+
+    console.log("DATE_TIME : "+this.datetime);
+    console.log("DESCRIPTION : "+this.description);
+    console.log("SERVICE_ID : "+this.checkedValues);
+    console.log("CLIENT_ID : "+userClientId);
+    console.log("STATUS : "+status);
+
+    const credentials = {servicesId:this.checkedValues, userClientId:userClientId, userEmpId:this.userEmpId, datetime:this.datetime, status:status, description:this.description}
+      this.http.post(`${this.baseUrl.getBaseUrl()}/appointments/add`, credentials, {
+      // this.http.post(`${this.baseUrl.getBaseUrl()}/appointments/add`, credentials, {
+        headers: new HttpHeaders().set('Content-Type', 'application/json')})
+      .subscribe((data: any) => {
+
+      })
+    this.router.navigateByUrl('/appointments');
   }
 
   ngOnInit(): void {
 
-      // //GET LIST EMPLOYES
-      // this.http.get(`${this.baseUrl.getBaseUrl()}/users`, {
-      //   headers: new HttpHeaders().set('Content-Type', 'application/json')})
-      // .subscribe((data: any) => {
-      //   // console.log(JSON.stringify(data));
-      //   this.users = data;
-      //   // console.log(this.users);
-      //   // console.log(JSON.stringify(this.users))
-      //   // this.router.navigateByUrl('/appointments/employes?date='+this.date+"&time="+this.time);
-      // })  
+    this.getListOfAppointments();
 
     // console.log(this.route.snapshot.queryParams['date']);
     // console.log(this.route.snapshot.queryParams['time']);
@@ -97,15 +128,12 @@ export class ContentComponent implements OnInit {
     // console.log(this.route.snapshot.params['idea']);
 
     this.route.url.subscribe(urlSegment => {
-      // console.log("SEG /0 = "+urlSegment[0]);
-      // console.log("SEG /1 = "+urlSegment[1]);
       
       if(urlSegment[urlSegment.length - 1].path === 'appointments'){
         this.isRoute = urlSegment[urlSegment.length - 1].path;
       }
       if(urlSegment[0]+'/'+urlSegment[1]==='appointments/employes'){
         this.isRoute = urlSegment[0]+'/'+urlSegment[1];
-        console.log(this.isRoute)
       }
       if(urlSegment[urlSegment.length - 1].path === 'notifications'){
         this.isRoute = urlSegment[urlSegment.length - 1].path;

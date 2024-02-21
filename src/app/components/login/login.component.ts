@@ -4,6 +4,7 @@ import { Component, Injectable, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { BaseUrl } from '../../BaseUrl';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -24,20 +25,17 @@ export class LoginComponent implements OnInit{
   errorMessage: string="";
   isSubmited: boolean = false;
   date: string="";
-  
 
-  constructor(private baseUrl: BaseUrl, private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute){}
-  
+  constructor(
+    private baseUrl: BaseUrl, 
+    private http: HttpClient, 
+    private router: Router, 
+    private activatedRoute: ActivatedRoute,
+    private cookie: CookieService){}
+
   onSubmit(){
-    // debugger
-    // console.log("EMAIL : "+this.email);
-    // console.log("PASSWORD : "+this.password);
     const credentials = { email: this.email, password: this.password}
     
-    // isconnected
-    this.user_is_in_local();
-    // isconnected
-    // console.log("ETOOOOO...")
     if(this.email === "" || this.password === ""){
       this.errorMessage = 'need_complete';
       this.router.navigateByUrl('/login');
@@ -49,6 +47,8 @@ export class LoginComponent implements OnInit{
   
         if(data.id!==undefined){
           localStorage.setItem("local", data.id);
+          this.cookie.set('_local',data.id);
+
           this.router.navigateByUrl('/home');
         } else {
           this.errorMessage = 'user_not_exist';
@@ -60,36 +60,13 @@ export class LoginComponent implements OnInit{
 
   onLogout(): void{
     localStorage.removeItem('local');
+    this.cookie.delete('_local');
+    
     this.errorMessage = 'logout';
     this.router.navigateByUrl('/login');
   }
 
-  user_is_in_local() {
-    const local = localStorage.getItem('local');
-    // console.log("ETOOO KOOOOOO")
-
-    // if(local!==null){
-    //   this.http.get(`${this.baseUrl.getBaseUrl()}/users/`+local, {
-    //     headers: new HttpHeaders().set('Content-Type', 'application/json')})
-    //   .subscribe((data: any) => {
-    //     // console.log(JSON.stringify(data));
-  
-    //     if(data.id!==undefined){
-    //       // console.log("OKAY IS PRESENT......")
-    //       localStorage.setItem("local", data.id);
-    //       this.router.navigateByUrl('/home');
-    //     } else {
-    //       // console.log("WTF....");
-    //       localStorage.removeItem("local");
-    //       this.router.navigateByUrl('/login');
-    //     }
-    //   })
-    // } else {
-    //   this.router.navigateByUrl('/login');
-    // }
-  }
-
   ngOnInit(): void {
-    this.user_is_in_local();
+    
   }
 }
