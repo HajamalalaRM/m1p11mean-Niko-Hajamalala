@@ -64,6 +64,9 @@ export class ServiceManagerComponent implements OnInit {
   deleteServ(){
     this.isSubmitDeleteService = true;
   }
+  cancelDeleteServ(){
+    this.isSubmitDeleteService = false;
+  }
 
   service_id: string = "";
   deleteService(id: string){

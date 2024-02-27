@@ -57,7 +57,11 @@
                   <thead>
                      <tr style="text-align: center;">
                         <th>#</th>
-                        <th>Name</th>
+                        <th>Name 
+                           <button *ngIf="isSubmitDeleteService" type="button" style="float: right;" (click)="cancelDeleteServ()" class="btn btn-warning">
+                              Cancel
+                           </button>
+                        </th>
                         <th>Delay (min)</th>
                         <th>Price ($)</th>
                         <th>Options</th>
@@ -66,10 +70,11 @@
                   <tbody *ngIf="servicesList" >
                      <tr *ngFor="let service of servicesList; let i = index" style="text-align: center;">
                         <td>
-                           <button *ngIf="isSubmitDeleteService" (click)="deleteService(service._id)" style="color: red; font-weight:bold; float: right;"> x </button>
                            {{ i + 1 }}
                         </td>
-                        <td>{{ service.name }}</td>
+                        <td>{{ service.name }} 
+                           <button *ngIf="isSubmitDeleteService" (click)="deleteService(service._id)" style="color: red; font-weight:bold; float: right;">x</button>
+                        </td>
                         <td>{{ service.durationMinute }}</td>
                         <td>{{ service.coast }}</td>
                         <td>
