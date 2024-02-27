@@ -25,6 +25,8 @@ export class LoginComponent implements OnInit{
   errorMessage: string="";
   isSubmited: boolean = false;
   date: string="";
+  user: any;
+  role_user: number = 0;
 
   constructor(
     private baseUrl: BaseUrl, 
@@ -46,13 +48,30 @@ export class LoginComponent implements OnInit{
       .subscribe((data: any) => {
   
         if(data.id!==undefined){
-          localStorage.setItem("local", data.id);
-          this.cookie.set('_local',data.id);
 
-          this.router.navigateByUrl('/home');
+            localStorage.setItem("local", data.id);
+            this.cookie.set('_local', data.id);
+            const credentials = {iduser: data.id}
+            this.http.post(`${this.baseUrl.getBaseUrl()}/users/detailUser`, credentials, {
+              headers: new HttpHeaders().set('Content-Type', 'application/json')})
+              .subscribe((data:any) => {
+                this.role_user = data.employedetails[0].role;
+
+                console.log("ROLE_USER ID----- "+this.role_user);
+                if(this.role_user === 1){
+                  this.router.navigateByUrl('/home');
+                }
+                if(this.role_user === 2){
+                  this.router.navigateByUrl('/employe/home');
+                }
+                if(this.role_user === 3){
+                  this.router.navigateByUrl('/manager/home');
+                }
+            });
+
         } else {
           this.errorMessage = 'user_not_exist';
-          this.router.navigateByUrl('/login'); 
+          this.router.navigateByUrl('/login');
         }
       })
     }
@@ -61,7 +80,7 @@ export class LoginComponent implements OnInit{
   onLogout(): void{
     localStorage.removeItem('local');
     this.cookie.delete('_local');
-    
+
     this.errorMessage = 'logout';
     this.router.navigateByUrl('/login');
   }

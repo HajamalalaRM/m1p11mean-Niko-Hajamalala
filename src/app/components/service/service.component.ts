@@ -34,7 +34,7 @@ export class ServiceComponent implements OnInit {
       headers: new HttpHeaders().set('Content-Type', 'application/json')})
     .subscribe((data: any) => {
       this.servicesList = data.services;
-      console.log(JSON.stringify(this.servicesList));
+      // console.log(JSON.stringify(this.servicesList));
     })
   }
   

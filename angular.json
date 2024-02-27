@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "magnificence": {
+    "m1p11mean-Niko-Hajamalala": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/magnificence",
+            "outputPath": "dist/m1p11mean-Niko-Hajamalala",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -60,10 +60,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "magnificence:build:production"
+              "buildTarget": "m1p11mean-Niko-Hajamalala:build:production"
             },
             "development": {
-              "buildTarget": "magnificence:build:development"
+              "buildTarget": "m1p11mean-Niko-Hajamalala:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -71,7 +71,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "magnificence:build"
+            "buildTarget": "m1p11mean-Niko-Hajamalala:build"
           }
         },
         "test": {

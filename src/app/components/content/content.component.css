@@ -3,3 +3,16 @@ input[type="checkbox"]{
    width: 15px;
    height: 15px;
 }
+
+.boutton-clignote {
+   animation-duration: .9s;
+   animation-name: clignoter;
+   animation-iteration-count: infinite;
+   transition: none;
+}
+
+@keyframes clignoter{
+   0% {opacity:1;}
+   40% {opacity:0;}
+   100% {opacity:1;}
+}
