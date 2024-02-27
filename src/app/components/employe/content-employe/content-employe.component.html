@@ -53,39 +53,37 @@
                      </tr>
                   </thead>
                   <tbody>
-                     <tr *ngFor="let appointment of appointmentsById; let i = index">
-                        <td>{{ i + 1 }}</td>
-                        <td *ngFor="let employ of appointment.userappointments">
-                           <p *ngFor="let client of employ.clientDetails">
-                              {{ client.name }}
-                           </p>
-                        </td>
-                        <td *ngFor="let service of appointment.userappointments">
-                           <p *ngFor="let servDet of service.serviceDetails">
-                              <li>{{ servDet.name }}</li>
-                           </p>
-                        </td>
-                        <td *ngFor="let service of appointment.userappointments">
-                           <p *ngFor="let servDet of service.serviceDetails">
-                              {{ servDet.coast }}
-                           </p>
-                        </td>
-                        <td *ngFor="let service of appointment.userappointments">
-                           <p *ngFor="let servDet of service.serviceDetails">
-                              {{ servDet.durationMinute }}
-                           </p>
-                        </td>
-                        <td *ngFor="let service of appointment.userappointments">
-                           <p><b>Begin  : &nbsp; </b> {{ service.datetime.substring(0,10)}} - {{ service.datetime.substring(11,16) }}</p>
-                           <p><b>Finish : &nbsp; </b> {{ service.dateFin.substring(0,10) }} - {{ service.dateFin.substring(11,16) }}</p>
-                        </td>
-                        <td *ngFor="let service of appointment.userappointments">
-                           {{ service.description}}
-                        </td>
-                        <td *ngFor="let service of appointment.userappointments">
-                           <div>{{ service.status}}</div>
-                        </td>
-                     </tr>
+                     <ng-container *ngFor="let appointment of appointmentsById">
+                        <tr *ngFor="let innerAppointment of appointment.userappointments; let i = index">
+                           <td>{{ i + 1 }}</td>
+                           <td>
+                              <ul>
+                                <li *ngFor="let client of innerAppointment.clientDetails">{{ client.name }}</li>
+                              </ul>
+                           </td>
+                           <td>
+                              <ul>
+                                <li *ngFor="let service of innerAppointment.serviceDetails">{{ service.name }}</li>
+                              </ul>
+                            </td>
+                            <td>
+                              <ul>
+                                <li *ngFor="let service of innerAppointment.serviceDetails">{{ service.coast }}</li>
+                              </ul>
+                            </td>
+                           <td>
+                              <ul>
+                                <li *ngFor="let service of innerAppointment.serviceDetails">{{ service.durationMinute }}</li>
+                              </ul>
+                            </td>
+                           <td>
+                              <p><b>Begin  : &nbsp; </b> {{ innerAppointment.datetime.substring(0,10)}} - {{ innerAppointment.datetime.substring(11,16) }}</p>
+                              <p><b>Finish : &nbsp; </b> {{ innerAppointment.dateFin.substring(0,10) }} - {{ innerAppointment.dateFin.substring(11,16) }}</p>
+                           </td>
+                           <td>{{ innerAppointment.description }}</td>
+                           <td>{{ innerAppointment.status }}</td>
+                        </tr>
+                     </ng-container>
                   </tbody>
                </table>
             </div>
@@ -117,47 +115,45 @@
                         <th>#</th>
                         <th>Client</th>
                         <th>Name of service</th>
-                        <th>Delay (min)</th>
-                        <th>Price ($)</th>
+                        <th>Delay (min) </th>
+                        <th>Price ($) </th>
                         <th>Date and time</th>
                         <th>Description</th>
                         <th>Status</th>
                      </tr>
                   </thead>
                   <tbody>
-                     <tr *ngFor="let appointment of appointmentsById; let i = index">
-                        <td>{{ i + 1 }}</td>
-                        <td *ngFor="let employ of appointment.userappointments">
-                           <p *ngFor="let client of employ.clientDetails">
-                              {{ client.name }}
-                           </p>
-                        </td>
-                        <td *ngFor="let service of appointment.userappointments">
-                           <p *ngFor="let servDet of service.serviceDetails">
-                              <li>{{ servDet.name }}</li>
-                           </p>
-                        </td>
-                        <td *ngFor="let service of appointment.userappointments">
-                           <p *ngFor="let servDet of service.serviceDetails">
-                              {{ servDet.coast }}
-                           </p>
-                        </td>
-                        <td *ngFor="let service of appointment.userappointments">
-                           <p *ngFor="let servDet of service.serviceDetails">
-                              {{ servDet.durationMinute }}
-                           </p>
-                        </td>
-                        <td *ngFor="let service of appointment.userappointments">
-                           <p><b>Begin  : &nbsp; </b> {{ service.datetime.substring(0,10)}} - {{ service.datetime.substring(11,16) }}</p>
-                           <p><b>Finish : &nbsp; </b> {{ service.dateFin.substring(0,10) }} - {{ service.dateFin.substring(11,16) }}</p>
-                        </td>
-                        <td *ngFor="let service of appointment.userappointments">
-                           {{ service.description}}
-                        </td>
-                        <td *ngFor="let service of appointment.userappointments">
-                           <div>{{ service.status}}</div>
-                        </td>
-                     </tr>
+                     <ng-container *ngFor="let appointment of appointmentsById">
+                        <tr *ngFor="let innerAppointment of appointment.userappointments; let i = index">
+                           <td>{{ i + 1 }}</td>
+                           <td>
+                              <ul>
+                                <li *ngFor="let client of innerAppointment.clientDetails">{{ client.name }}</li>
+                              </ul>
+                           </td>
+                           <td>
+                              <ul>
+                                <li *ngFor="let service of innerAppointment.serviceDetails">{{ service.name }}</li>
+                              </ul>
+                            </td>
+                            <td>
+                              <ul>
+                                <li *ngFor="let service of innerAppointment.serviceDetails">{{ service.coast }}</li>
+                              </ul>
+                            </td>
+                           <td>
+                              <ul>
+                                <li *ngFor="let service of innerAppointment.serviceDetails">{{ service.durationMinute }}</li>
+                              </ul>
+                            </td>
+                           <td>
+                              <p><b>Begin  : &nbsp; </b> {{ innerAppointment.datetime.substring(0,10)}} - {{ innerAppointment.datetime.substring(11,16) }}</p>
+                              <p><b>Finish : &nbsp; </b> {{ innerAppointment.dateFin.substring(0,10) }} - {{ innerAppointment.dateFin.substring(11,16) }}</p>
+                           </td>
+                           <td>{{ innerAppointment.description }}</td>
+                           <td>{{ innerAppointment.status }}</td>
+                        </tr>
+                     </ng-container>
                   </tbody>
                </table>
             </div>

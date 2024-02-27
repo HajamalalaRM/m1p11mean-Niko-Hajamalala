@@ -22,6 +22,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class UserManagerComponent implements OnInit{
 
   usersList: any = [];
+  usersListEmp: any = [];
 
   constructor( 
     private route: ActivatedRoute,
@@ -35,10 +36,17 @@ export class UserManagerComponent implements OnInit{
       headers: new HttpHeaders().set('Content-Type', 'application/json')})
       .subscribe((data:any) => {
       this.usersList = data.usersdetails;
-      // console.log(this.usersList);
+  })};
+
+  getAllUserEmploye() {
+    this.http.get(`${this.baseUrl.getBaseUrl()}/users/employes`, {
+      headers: new HttpHeaders().set('Content-Type', 'application/json')})
+      .subscribe((data:any) => {
+      this.usersListEmp = data.users;
   })};
 
   ngOnInit(): void {
     this.getAllUserWithPreference();
+    this.getAllUserEmploye();
   }
 }

@@ -1,5 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import { BaseUrl } from '../../BaseUrl';
 import { LoginComponent } from '../login/login.component';
 
 @Component({
@@ -12,9 +15,20 @@ import { LoginComponent } from '../login/login.component';
 
 export class HeaderComponent{
 
-  constructor(private loginService: LoginComponent){}
-  onLogout(): void{
-    this.loginService.onLogout();
+  errorMessage: string="";
+  constructor(
+    private baseUrl: BaseUrl, 
+    private http: HttpClient, 
+    private router: Router, 
+    private activatedRoute: ActivatedRoute,
+    private cookie: CookieService){}
+
+  onLogoutClient(): void{
+    localStorage.removeItem('local');
+    // this.cookie.deleteAll('_local');
+
+    this.errorMessage = 'logout';
+    this.router.navigateByUrl('/login');
   }
 
 }

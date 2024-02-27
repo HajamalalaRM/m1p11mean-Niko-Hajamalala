@@ -9,6 +9,7 @@
             <p class="card-description">There are the list of all users</p>
             
             <div class="table-responsive pt-3">
+               <h5>CLIENTS :</h5>
                <table class="table table-bordered">
                <thead>
                   <tr>
@@ -47,6 +48,38 @@
                   </tr>
                </tbody>
             </table>
+         </div>
+
+         <br/>
+
+         <div class="table-responsive pt-3">
+            <h5>EMPLOYES :</h5>
+            <table class="table table-bordered">
+            <thead>
+               <tr>
+                  <th>Nom</th>
+                  <th>Email</th>
+                  <th>Contact</th>
+                  <th>Rôle</th>
+                  <th style="text-align:center;">Options</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr *ngFor="let user of usersListEmp">
+                  <td>{{ user.name }}</td>
+                  <td></td>
+                  <td></td>
+                  <td>Employe</td>
+                  <td style="text-align:center;">
+                     <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-danger">delete</button>&nbsp;&nbsp;
+                      </div>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+
          </div>
       </div>
    </div>

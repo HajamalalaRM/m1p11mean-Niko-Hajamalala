@@ -40,7 +40,7 @@ export class ContentEmployeComponent implements OnInit {
   datetime: string = "";
   description: string = "";
 
-  local: string = this.cookie.get('_local');
+  // local: string = this.cookie.get('_local');
   currentDate!: Date;
   dateNow!: string;
   empAppointment: any;
@@ -73,8 +73,9 @@ export class ContentEmployeComponent implements OnInit {
   }
   
   // get liste apppointments by id user
-  getListOfAppointmentsByCustomerID(userID: string = this.local) {
-    const credentials = {iduser: userID}
+  getListOfAppointmentsByCustomerID() {
+    let local = localStorage.getItem('local')?.toString();
+    const credentials = {iduser: local}
     this.http.post(`${this.baseUrl.getBaseUrl()}/users/empAppointment`, credentials, {
       headers: new HttpHeaders().set('Content-Type', 'application/json')})
     .subscribe((data: any) => {
@@ -83,8 +84,9 @@ export class ContentEmployeComponent implements OnInit {
     })};
 
 
-  getDetailUser(iduser: string = this.local) {
-    const credentials = {iduser: iduser}
+  getDetailUser() {
+    let local = localStorage.getItem('local')?.toString();
+    const credentials = {iduser: local}
     this.http.post(`${this.baseUrl.getBaseUrl()}/users/detailUser`, credentials, {
       headers: new HttpHeaders().set('Content-Type', 'application/json')})
       .subscribe((data:any) => {
@@ -95,7 +97,7 @@ export class ContentEmployeComponent implements OnInit {
   ngOnInit(): void {
 
     this.getDetailUser();
-    this.getListOfAppointmentsByCustomerID(this.local);
+    this.getListOfAppointmentsByCustomerID();
 
 // DATE NOW
     setInterval(() => {

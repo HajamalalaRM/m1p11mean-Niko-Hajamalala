@@ -24,7 +24,7 @@ export class PreferenceComponent implements OnInit {
   users: any = [];
   usersList: any = [];
   preferred_services: any = [];
-  local: string = this.cookie.get('_local');
+  // local: string = this.cookie.get('_local');
   isRole: string = "";
 
   constructor( 
@@ -34,8 +34,9 @@ export class PreferenceComponent implements OnInit {
     private baseUrl: BaseUrl,
     private cookie: CookieService) {}
 
-  getDetailUser(iduser: string = this.local) {
-    const credentials = {iduser: iduser}
+  getDetailUser() {
+    let local = localStorage.getItem('local')?.toString();
+    const credentials = {iduser: local}
     this.http.post(`${this.baseUrl.getBaseUrl()}/users/detailUser`, credentials, {
       headers: new HttpHeaders().set('Content-Type', 'application/json')})
       .subscribe((data:any) => {
@@ -53,23 +54,40 @@ export class PreferenceComponent implements OnInit {
 
   //DELETE SERVICE PREFERED BY CLIENT
   isSubmitDeleteServPref: boolean = false;
+  isSubmitDeleteEmpPref: boolean = false;
   deletePreferenceService(){
     this.isSubmitDeleteServPref = true;
+    this.isSubmitDeleteEmpPref = true;
   }
 
   service_id: string = "";
   deleteServicePrefered(id: string){
     this.service_id = id;
-    console.log(" SERVICE_ID "+ this.service_id);
-    console.log(" LOCAL_ID "+ this.local);
     this.deletePrefService();
     this.router.navigateByUrl('preferences');
     location.reload();
   }
+  emp_id: string = "";
+  deleteEmpPrefered(id: string){
+    this.emp_id = id;
+    this.deletePrefEmp();
+    this.router.navigateByUrl('preferences');
+    location.reload();
+  }
   
-  deletePrefService(userid: string = this.local, srvprefere: string = this.service_id) {
-    const credentials = {userid: userid, srvprefere: srvprefere}
+  deletePrefService(srvprefere: string = this.service_id) {
+    let local = localStorage.getItem('local')?.toString();
+    const credentials = {userid: local, srvprefere: srvprefere}
     this.http.post(`${this.baseUrl.getBaseUrl()}/users/removeSrvPreference`, credentials, {
+      headers: new HttpHeaders().set('Content-Type', 'application/json')})
+      .subscribe((data:any) => {
+
+  })};
+
+  deletePrefEmp(empprefere: string = this.emp_id) {
+    let local = localStorage.getItem('local')?.toString();
+    const credentials = {userid: local, empprefere: empprefere}
+    this.http.post(`${this.baseUrl.getBaseUrl()}/users/removeEmpPreference`, credentials, {
       headers: new HttpHeaders().set('Content-Type', 'application/json')})
       .subscribe((data:any) => {
 
@@ -80,9 +98,12 @@ export class PreferenceComponent implements OnInit {
 
   //ADD SERVICE PREFERED BY CLIENT
   isSubmitAddServPref: boolean = false;
+  isSubmitAddEmpPref: boolean = false;
   addServicePreference(){
     this.isSubmitAddServPref = true;
+    this.isSubmitAddEmpPref = true;
     this.getListServices();
+    this.getListEmployes();
   }
   cancelAddServicePreference(){
     this.isSubmitAddServPref = this.isSubmitAddServPref;
@@ -91,7 +112,7 @@ export class PreferenceComponent implements OnInit {
 
   serviceId: string = "";
   services: any = [];
-  onChangeEmp(str: string){ this.serviceId = str; console.log(this.serviceId) }
+  onChangeServ(str: string){ this.serviceId = str; console.log(this.serviceId) }
   getListServices(){
     this.http.get(`${this.baseUrl.getBaseUrl()}/services/list`, {
       headers: new HttpHeaders().set('Content-Type', 'application/json')})
@@ -105,15 +126,46 @@ export class PreferenceComponent implements OnInit {
     location.reload();
   }
 
-  addPrefService(userid: string = this.local, srvprefere: string = this.serviceId) {
-    const credentials = {userid: userid, srvprefere: srvprefere}
+  addPrefService(srvprefere: string = this.serviceId) {
+    let local = localStorage.getItem('local')?.toString();
+    const credentials = {userid: local, srvprefere: srvprefere}
     this.http.post(`${this.baseUrl.getBaseUrl()}/users/addSrvPreference`, credentials, {
       headers: new HttpHeaders().set('Content-Type', 'application/json')})
       .subscribe((data:any) => {
 
   })};
 
-  /// DELETE EMPLOYE PREFERENCE BY CLIENT MANOMBOKA ETO
+  /// ADD EMPLOYE PREFERENCE BY CLIENT MANOMBOKA ETO
+  cancelAddEmployePreference(){
+    this.isSubmitAddEmpPref = this.isSubmitAddEmpPref;
+    location.reload();
+  }
+
+  employeId: string = "";
+  employes: any = [];
+  onChangeEmp(str: string){ this.employeId = str; console.log(this.employeId) }
+  getListEmployes(){
+    this.http.get(`${this.baseUrl.getBaseUrl()}/users/employes`, {
+      headers: new HttpHeaders().set('Content-Type', 'application/json')})
+    .subscribe((data: any) => {
+      this.employes = data.users;
+      console.log(this.employes);
+    })
+  }
+
+  addEmployePrefered(){
+    this.addPrefEmploye();
+    location.reload();
+  }
+
+  addPrefEmploye(empprefere: string = this.employeId) {
+    let local = localStorage.getItem('local')?.toString();
+    const credentials = {userid: local, empprefere: empprefere}
+    this.http.post(`${this.baseUrl.getBaseUrl()}/users/addEmpPreference`, credentials, {
+      headers: new HttpHeaders().set('Content-Type', 'application/json')})
+      .subscribe((data:any) => {
+
+  })};
 
   ngOnInit(): void {
     this.getDetailUser();

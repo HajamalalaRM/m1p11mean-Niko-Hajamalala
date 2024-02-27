@@ -36,7 +36,7 @@ export class ServiceManagerComponent implements OnInit {
   isSubmitNewService(){
     this.isSubmitNewServ = true;
   }
-
+  
   serviceName: string = "";
   serviceDelay: string = "";
   servicePrice: string = "";
@@ -45,26 +45,41 @@ export class ServiceManagerComponent implements OnInit {
   onChangeServicePrice(servicePrice: string){ this.servicePrice = servicePrice; }
   
   addNewService(){
-    console.log("SERVICE_NAME = "+this.serviceName);
-    console.log("SERVICE_DELAY = "+this.serviceDelay);
-    console.log("SERVICE_PRICE = "+this.servicePrice);
     if(this.serviceName==='' || this.serviceDelay==='' || this.servicePrice===''){
       location.reload();
       alert("You must to complete those field! ")
     } else {
-
+      
       const credentials = { name: this.serviceName, coast: this.servicePrice, durationMinute: this.serviceDelay }
-        this.http.post(`${this.baseUrl.getBaseUrl()}/services/add`, credentials, {
+      this.http.post(`${this.baseUrl.getBaseUrl()}/services/add`, credentials, {
           headers: new HttpHeaders().set('Content-Type', 'application/json')})
           .subscribe((data: any) => {
           location.reload();
       });
-
-      //ETO ILAY FONCTION ADD SERVICE BY MANAGER
     }
   }
-
   
+  //DELETE SERVICE PREFERED BY CLIENT
+  isSubmitDeleteService: boolean = false;
+  deleteServ(){
+    this.isSubmitDeleteService = true;
+  }
+
+  service_id: string = "";
+  deleteService(id: string){
+    this.service_id = id;
+    this.deleteServiceByManager();
+    this.router.navigateByUrl('services');
+    location.reload();
+  }
+  
+  deleteServiceByManager(idservice: string = this.service_id) {
+    const credentials = {idservice: idservice}
+    this.http.post(`${this.baseUrl.getBaseUrl()}/services/removeService`, credentials, {
+      headers: new HttpHeaders().set('Content-Type', 'application/json')})
+      .subscribe((data:any) => {
+
+  })};  
 
   ngOnInit(): void {
     this.getListServices();

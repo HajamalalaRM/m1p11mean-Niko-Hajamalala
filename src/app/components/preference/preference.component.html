@@ -38,7 +38,7 @@
                      <td>
                         <ul *ngFor="let emp of user.employee_users">
                            <li>{{ emp.name }}
-                              <!-- <button *ngIf="isSubmitDeleteEmpPref" (click)="deleteEmployePrefered(emp._id)" style="color: red; font-weight:bold; float: right;"> x </button> -->
+                              <button *ngIf="isSubmitDeleteEmpPref" (click)="deleteEmpPrefered(emp._id)" style="color: red; font-weight:bold; float: right;"> x </button>
                            </li>
                         </ul>
                      </td>
@@ -55,13 +55,13 @@
             </table>
 
             <div class="row">
-               <div class="col-md-4"></div>
+               <div class="col-md-1"></div>
                <div *ngIf="isSubmitAddServPref" class="col-md-4">
-                  <label for="exampleFormControlSelect1">There are the services :</label>
+                  <label for="exampleFormControlSelect1">There are the name of service :</label>
                   <select class="form-control" id="exampleFormControlSelect1"
                      #selectElement 
                      name="serviceId" 
-                     (change)="onChangeEmp(selectElement.value)"
+                     (change)="onChangeServ(selectElement.value)"
                   >
                      <option value="">Choose the service...</option>
                      <option
@@ -73,76 +73,39 @@
                   <br>
                   <div class="row" style="float: right;">
                      <div>
-                        <input (click)="addServicePrefered()" type="submit" class="btn btn-success mr-2" value="Add">
+                        <input (click)="addServicePrefered()" type="submit" class="btn btn-success mr-2" value="Add service prefer">
                         <button (click)="cancelAddServicePreference()" class="btn btn-light">Cancel</button>
                      </div>
                   </div>
                </div>
-               <div class="col-md-4"></div>
+               <div class="col-md-2"></div>
+               <div *ngIf="isSubmitAddEmpPref" class="col-md-4">
+                  <label for="exampleFormControlSelect2">There are the name of employe :</label>
+                  <select class="form-control" id="exampleFormControlSelect2"
+                  #selectElementEmploy 
+                  name="employeId" 
+                     (change)="onChangeEmp(selectElementEmploy.value)"
+                  >
+                     <option value="">Choose the employe...</option>
+                     <option
+                        *ngFor="let employ of employes" 
+                        [value]="employ._id"  
+                        name="employeId" 
+                        > {{ employ.name }} </option>
+                     </select>
+                     <br>
+                     <div class="row" style="float: right;">
+                        <div>
+                           <input (click)="addEmployePrefered()" type="submit" class="btn btn-success mr-2" value="Add employe prefer">
+                           <button (click)="cancelAddEmployePreference()" class="btn btn-light">Cancel</button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <br/><br/>
+               <div class="col-md-1"></div>
+               
             </div>
-            
-            <br/>
-
-            
-
-         </div>
-         </div>
-      </div>
-   </div>
-</div>
-
-
-<!-- PREFERENCES FOR ALL USERS -->
-<br/>
-<div class="row">
-   <div class="col-md-12 grid-margin stretch-card">
-      <div class="card">
-         <div class="card-body">
-            <h5 class="card-title">Preferences's list of all users</h5>
-            <p class="card-description">There are the list of preferences</p>
-            <div class="table-responsive pt-3">
-
-               <table class="table table-bordered">
-               <thead>
-                  <tr>
-                     <th>Nom</th>
-                     <th>Email</th>
-                     <th>Contact</th>
-                     <th>Rôle</th>
-                     <th>Services prefer</th>
-                     <th>Employe prefer</th>
-                     <th style="text-align:center;">Options</th>
-                  </tr>
-               </thead>
-               <tbody>
-                  <tr *ngFor="let user of usersList">
-                     <td>{{ user.name }}</td>
-                     <td>{{ user.email }}</td>
-                     <td>{{ user.contact }}</td>
-                     <td>
-                        {{ user.role === 1 ? 'Client' : user.role === 2 ? 'Employe' : user.role === 3 ? 'Manager' : 'Unknown' }}
-                     </td>
-                     <td>
-                        <li *ngFor="let service of user.preferred_services">
-                           {{ service.name }}
-                        </li>
-                     </td>
-                     <td>
-                        <li *ngFor="let emp of user.preferred_employes">
-                           {{ emp.name }}
-                        </li>
-                     </td>
-                     <td style="text-align:center;">
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                           <button type="button" class="btn btn-secondary">change</button>&nbsp;&nbsp;
-                           <button type="button" class="btn btn-danger">delete</button>&nbsp;&nbsp;
-                         </div>
-                     </td>
-                  </tr>
-               </tbody>
-            </table>
-
-         </div>
          </div>
       </div>
    </div>

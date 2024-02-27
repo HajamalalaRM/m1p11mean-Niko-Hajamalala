@@ -1,1 +1,55 @@
-<p>preference-manager works!</p>
+<!-- PREFERENCES FOR ALL USERS -->
+<br/>
+<div class="row">
+   <div class="col-md-12 grid-margin stretch-card">
+      <div class="card">
+         <div class="card-body">
+            <h5 class="card-title">Preferences's list of all users</h5>
+            <p class="card-description">There are the list of preferences</p>
+            <div class="table-responsive pt-3">
+
+               <table class="table table-bordered">
+               <thead>
+                  <tr>
+                     <th>Nom</th>
+                     <th>Email</th>
+                     <th>Contact</th>
+                     <th>Rôle</th>
+                     <th>Services prefer</th>
+                     <th>Employe prefer</th>
+                     <th style="text-align:center;">Options</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr *ngFor="let user of usersList">
+                     <td>{{ user.name }}</td>
+                     <td>{{ user.email }}</td>
+                     <td>{{ user.contact }}</td>
+                     <td>
+                        {{ user.role === 1 ? 'Client' : user.role === 2 ? 'Employe' : user.role === 3 ? 'Manager' : 'Unknown' }}
+                     </td>
+                     <td>
+                        <li *ngFor="let service of user.preferred_services">
+                           {{ service.name }}
+                        </li>
+                     </td>
+                     <td>
+                        <li *ngFor="let emp of user.preferred_employes">
+                           {{ emp.name }}
+                        </li>
+                     </td>
+                     <td style="text-align:center;">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                           <button type="button" class="btn btn-secondary">change</button>&nbsp;&nbsp;
+                           <button type="button" class="btn btn-danger">delete</button>&nbsp;&nbsp;
+                         </div>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+
+         </div>
+         </div>
+      </div>
+   </div>
+</div>

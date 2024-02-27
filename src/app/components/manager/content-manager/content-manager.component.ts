@@ -41,7 +41,7 @@ export class ContentManagerComponent implements OnInit {
   datetime: string = "";
   description: string = "";
 
-  local: string = this.cookie.get('_local');
+  // local: string = this.cookie.get('_local');
   currentDate!: Date;
   dateNow!: string;
   empAppointment: any;
@@ -74,8 +74,9 @@ export class ContentManagerComponent implements OnInit {
   }
   
   // get liste apppointments by id user
-  getListOfAppointmentsManager(userID: string = this.local) {
-    const credentials = {iduser: userID}
+  // getListOfAppointmentsManager(userID: string = this.local) {
+  getListOfAppointmentsManager() {
+    const credentials = {iduser: localStorage.getItem('local')}
     this.http.post(`${this.baseUrl.getBaseUrl()}/users/adminAppointment`, credentials, {
       headers: new HttpHeaders().set('Content-Type', 'application/json')})
     .subscribe((data: any) => {
@@ -84,8 +85,9 @@ export class ContentManagerComponent implements OnInit {
     })};
 
 
-  getDetailUser(iduser: string = this.local) {
-    const credentials = {iduser: iduser}
+  // getDetailUser(iduser: string = this.local) {
+  getDetailUser() {
+    const credentials = {iduser: localStorage.getItem('local')}
     this.http.post(`${this.baseUrl.getBaseUrl()}/users/detailUser`, credentials, {
       headers: new HttpHeaders().set('Content-Type', 'application/json')})
       .subscribe((data:any) => {

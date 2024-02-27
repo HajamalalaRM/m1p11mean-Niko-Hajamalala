@@ -51,7 +51,7 @@ export class ContentComponent implements OnInit {
   datetime: string = "";
   description: string = "";
 
-  local: string = this.cookie.get('_local');
+  // local: string = this.cookie.get('_local');
   currentDate!: Date;
   dateNow!: string;
   empAppointment: any;
@@ -86,7 +86,8 @@ export class ContentComponent implements OnInit {
   
   // get liste apppointments by id user
   getListOfAppointmentsByCustomerID() {
-    const credentials = {iduser: this.local}
+    let local = localStorage.getItem('local')?.toString();
+    const credentials = {iduser: local}
     this.http.post(`${this.baseUrl.getBaseUrl()}/users/clientAppointment`, credentials, {
       headers: new HttpHeaders().set('Content-Type', 'application/json')})
     .subscribe((data: any) => {
@@ -122,7 +123,8 @@ export class ContentComponent implements OnInit {
       this.http.post(`${this.baseUrl.getBaseUrl()}/appointments/add`, credentials, {
         headers: new HttpHeaders().set('Content-Type', 'application/json')})
       .subscribe((data: any) => {
-
+        console.log(data);
+        location.reload();
       })
     this.router.navigateByUrl('/appointments');
   }
@@ -138,8 +140,9 @@ export class ContentComponent implements OnInit {
       })
   }
 
-  getDetailUser(iduser: string = this.local) {
-    const credentials = {iduser: iduser}
+  getDetailUser() {
+    let local = localStorage.getItem('local')?.toString();
+    const credentials = {iduser: local}
     this.http.post(`${this.baseUrl.getBaseUrl()}/users/detailUser`, credentials, {
       headers: new HttpHeaders().set('Content-Type', 'application/json')})
       .subscribe((data:any) => {
@@ -151,12 +154,6 @@ export class ContentComponent implements OnInit {
 
     this.getDetailUser();
     this.getListOfAppointmentsByCustomerID();
-    // this.getClientAppointment();
-
-    // console.log(this.route.snapshot.queryParams['date']);
-    // console.log(this.route.snapshot.queryParams['time']);
-    // console.log(this.route.snapshot.routeConfig?.path);
-    // console.log(this.route.snapshot.params['idea']);
 
 // DATE NOW
     setInterval(() => {

@@ -14,7 +14,6 @@
                         <th>Name</th>
                         <th>Delay (min)</th>
                         <th>Price ($)</th>
-                        <!-- <th>Options</th> -->
                      </tr>
                   </thead>
                   <tbody *ngIf="servicesList" >
@@ -23,12 +22,6 @@
                         <td>{{ service['name'] }}</td>
                         <td>{{ service['durationMinute'] }}</td>
                         <td>{{ service['coast'] }}</td>
-                        <!-- <td>
-                           <div class="btn-group" role="group" aria-label="Basic example">
-                              <button type="button" class="btn btn-secondary">update</button>&nbsp;&nbsp;
-                              <button type="button" class="btn btn-danger">delete</button>&nbsp;&nbsp;
-                            </div>
-                        </td> -->
                      </tr>
                   </tbody>
                </table>

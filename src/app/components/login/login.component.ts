@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit{
     private activatedRoute: ActivatedRoute,
     private cookie: CookieService){}
 
+  urlNavigate: string = "";
   onSubmit(){
     const credentials = { email: this.email, password: this.password}
     
@@ -49,24 +50,26 @@ export class LoginComponent implements OnInit{
   
         if(data.id!==undefined){
 
-            localStorage.setItem("local", data.id);
-            this.cookie.set('_local', data.id);
             const credentials = {iduser: data.id}
             this.http.post(`${this.baseUrl.getBaseUrl()}/users/detailUser`, credentials, {
               headers: new HttpHeaders().set('Content-Type', 'application/json')})
               .subscribe((data:any) => {
-                this.role_user = data.employedetails[0].role;
 
-                console.log("ROLE_USER ID----- "+this.role_user);
+                this.role_user = data.employedetails[0].role;
+                localStorage.setItem("local", credentials.iduser);
+                // this.cookie.set('_local', credentials.iduser);
+
                 if(this.role_user === 1){
-                  this.router.navigateByUrl('/home');
+                  this.urlNavigate = "/home";
                 }
                 if(this.role_user === 2){
-                  this.router.navigateByUrl('/employe/home');
+                  this.urlNavigate = "/employe/home";
                 }
                 if(this.role_user === 3){
-                  this.router.navigateByUrl('/manager/home');
+                  this.urlNavigate = "/manager/home";
                 }
+
+              this.router.navigateByUrl(this.urlNavigate);
             });
 
         } else {
@@ -79,7 +82,7 @@ export class LoginComponent implements OnInit{
 
   onLogout(): void{
     localStorage.removeItem('local');
-    this.cookie.delete('_local');
+    // this.cookie.delete('_local');
 
     this.errorMessage = 'logout';
     this.router.navigateByUrl('/login');

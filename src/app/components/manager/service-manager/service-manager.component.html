@@ -45,6 +45,9 @@
                   <button type="button" style="float: right;" (click)="isSubmitNewService()" class="btn btn-warning">
                      Adding new service
                   </button>
+                  <button *ngIf="isSubmitDeleteService===false" type="button" style="float: right;" (click)="deleteServ()" class="btn btn-danger">
+                     Delete service
+                  </button>
                </div>
             </div>
                   
@@ -62,14 +65,16 @@
                   </thead>
                   <tbody *ngIf="servicesList" >
                      <tr *ngFor="let service of servicesList; let i = index" style="text-align: center;">
-                        <td>{{ i + 1 }}</td>
+                        <td>
+                           <button *ngIf="isSubmitDeleteService" (click)="deleteService(service._id)" style="color: red; font-weight:bold; float: right;"> x </button>
+                           {{ i + 1 }}
+                        </td>
                         <td>{{ service.name }}</td>
                         <td>{{ service.durationMinute }}</td>
                         <td>{{ service.coast }}</td>
                         <td>
                            <div class="btn-group" role="group" aria-label="Basic example">
-                              <button type="button" class="btn btn-secondary">update</button>&nbsp;&nbsp;
-                              <button type="button" class="btn btn-danger">delete</button>
+                              <button type="button" class="btn btn-secondary">update</button>
                             </div>
                         </td>
                      </tr>
