@@ -23,7 +23,7 @@
                   <br/>
                   <div class="form-group">
                   <form>
-                     <label for="exampleFormControlTextarea6">COMPTE :</label>
+                     <label for="exampleFormControlTextarea6">COMPTE : {{ user.compte }}</label>
                      <input class="form-control"
                         #selectCoast
                         type="number" 
@@ -52,6 +52,21 @@
                   <div class="col-md-10">
                      <h5 class="card-title">List of your appointment</h5>
                      <p class="card-description">There are the list of your appointment</p>
+
+                     <div *ngIf="isSubmitPayement">
+                        Total : {{ coastSum}} 
+                        <!-- <input type="number" value="{{ coastSum}}"> -->
+                        <form>
+                        <input class="form-control"
+                              #selectCoastSum1
+                              type="number" 
+                              name="End"
+                              (change)="onChangeCoastSum1(selectCoastSum1.value)"
+                              value="{{coastSum}}">
+                        <input type="submit" (click)="paye()" value="Pay">
+                        </form>
+                     </div>
+
                   </div>
                   <div class="col-md-2">
                      <h5 class="card-title"></h5>
@@ -95,6 +110,9 @@
                               </td>
                               <td>{{ innerAppointment.description }}</td>
                               <td>{{ innerAppointment.status }}</td>
+                              <td>
+                                 <button (click)="payement(innerAppointment._id)">pay</button>
+                              </td>
                            </tr>
                         </ng-container>
                      </tbody>

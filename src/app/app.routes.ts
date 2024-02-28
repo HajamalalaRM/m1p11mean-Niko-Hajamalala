@@ -27,6 +27,7 @@ export const routes: Routes = [
    { path: 'manager/notifications', component: HomeManagerComponent },
    { path: 'manager/users', component: HomeManagerComponent },
    { path: 'manager/offers', component: HomeManagerComponent },
+   { path: 'manager/moneys', component: HomeManagerComponent },
    
 
    

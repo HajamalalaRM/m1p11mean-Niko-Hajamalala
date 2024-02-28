@@ -1,0 +1,30 @@
+<div class="table-responsive pt-3">
+   <table class="table table-bordered">
+   <thead>
+      <tr>
+         <th>#</th>
+         <th>Name</th>
+         <th>Coast</th>
+         <th></th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr *ngFor="let transaction of transactions; let i = index">
+         <td>{{ i + 1 }}</td>
+         <td>
+            <ul>
+               <li>{{ transaction.users[0].name }}</li>
+            </ul>
+         </td>
+         <td>
+            <ul>
+               <li>{{ transaction.coast }}</li>
+            </ul>
+            </td>             
+         <td>
+            <button (click)="validateRequest(transaction._id)">Validate</button>
+         </td>
+      </tr>
+   </tbody>
+</table>
+</div>

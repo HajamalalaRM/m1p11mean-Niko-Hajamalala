@@ -155,6 +155,11 @@
    <app-notification-manager></app-notification-manager>
 </div>
 
+<!-- MONEY MANAGER -->
+<div *ngIf="isRoute==='manager/moneys'">
+   <app-money-manager></app-money-manager>
+</div>
+
 <!-- PREFERENCES -->
 <div *ngIf="isRoute==='manager/preferences'">
    <app-preference-manager></app-preference-manager>
