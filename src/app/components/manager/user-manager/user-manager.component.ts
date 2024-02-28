@@ -32,17 +32,17 @@ export class UserManagerComponent implements OnInit{
     private cookie: CookieService) {}
     
   getAllUserWithPreference() {
-    this.http.get(`${this.baseUrl.getBaseUrl()}/users/listAllUsers`, {
+    this.http.get(`${this.baseUrl.getBaseUrl()}/users/listAllClients`, {
       headers: new HttpHeaders().set('Content-Type', 'application/json')})
       .subscribe((data:any) => {
       this.usersList = data.usersdetails;
   })};
 
   getAllUserEmploye() {
-    this.http.get(`${this.baseUrl.getBaseUrl()}/users/employes`, {
+    this.http.get(`${this.baseUrl.getBaseUrl()}/users/listAllEmps`, {
       headers: new HttpHeaders().set('Content-Type', 'application/json')})
       .subscribe((data:any) => {
-      this.usersListEmp = data.users;
+      this.usersListEmp = data.usersdetails;
   })};
 
   ngOnInit(): void {

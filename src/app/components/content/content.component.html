@@ -10,16 +10,30 @@
                <div *ngFor="let item of items" cdkDrag>{{ item }}</div>
              </div> -->
             <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-               <h3 class="font-weight-bold">Welcome {{ user.name }}</h3>
+               <h3 class="font-weight-bold">Welcome {{ user.name }} </h3>
                <h6 class="font-weight-normal mb-0">All systems are running smoothly! Good luck to you and have fun with <span class="text-primary"> " MAGNIFICIENCE "</span></h6>
             </div>
             <div class="col-12 col-xl-4">
-               <div class="justify-content-end d-flex">
+               <div class="justify-content-end d-flex-row">
                   <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
                      <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button" id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                      {{ dateNow }}
                      </button>
                   </div>
+                  <br/>
+                  <div class="form-group">
+                  <form>
+                     <label for="exampleFormControlTextarea6">COMPTE :</label>
+                     <input class="form-control"
+                        #selectCoast
+                        type="number" 
+                        name="coast"
+                        (change)="onChangeCoast(selectCoast.value)"
+                        placeholder="Enter a Coast of offer..."
+                     >
+                     <input type="submit" (click)="ask_compte()" value="Ask">
+                  </form>
+               </div>
                </div>
             </div>
          </div>

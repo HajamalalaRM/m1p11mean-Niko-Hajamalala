@@ -7,6 +7,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { BaseUrl } from '../../../BaseUrl';
 import { HeaderManagerComponent } from '../header-manager/header-manager.component';
 import { NotificationManagerComponent } from '../notification-manager/notification-manager.component';
+import { OfferManagerComponent } from '../offer-manager/offer-manager.component';
 import { PreferenceManagerComponent } from '../preference-manager/preference-manager.component';
 import { ServiceManagerComponent } from '../service-manager/service-manager.component';
 import { UserManagerComponent } from '../user-manager/user-manager.component';
@@ -14,7 +15,7 @@ import { UserManagerComponent } from '../user-manager/user-manager.component';
 @Component({
   selector: 'app-content-manager',
   standalone: true,
-  imports: [NgIf, NgFor, FormsModule, RouterLink, ServiceManagerComponent, NotificationManagerComponent, PreferenceManagerComponent, HeaderManagerComponent, UserManagerComponent],
+  imports: [NgIf, NgFor, FormsModule, RouterLink, ServiceManagerComponent, NotificationManagerComponent, PreferenceManagerComponent, HeaderManagerComponent, UserManagerComponent, OfferManagerComponent],
   templateUrl: './content-manager.component.html',
   styleUrl: './content-manager.component.css'
 })
@@ -137,6 +138,9 @@ export class ContentManagerComponent implements OnInit {
         this.isRoute = urlSegment[0]+'/'+urlSegment[1];
       }
       if(urlSegment[0]+'/'+urlSegment[1]==='manager/users'){
+        this.isRoute = urlSegment[0]+'/'+urlSegment[1];
+      }
+      if(urlSegment[0]+'/'+urlSegment[1]==='manager/offers'){
         this.isRoute = urlSegment[0]+'/'+urlSegment[1];
       }
     })

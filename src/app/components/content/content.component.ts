@@ -150,6 +150,25 @@ export class ContentComponent implements OnInit {
       // console.log(this.user);
     })};
 
+
+    coast: string = "0";
+    onChangeCoast(coast: string){ this.coast = coast; }
+
+    ask_compte(){
+      console.log(this.coast) 
+      this.postMoneyRequest();
+      
+    }
+
+    postMoneyRequest() {
+      let local = localStorage.getItem('local')?.toString();
+      const credentials = {userid: local, coast: this.coast}
+      this.http.post(`${this.baseUrl.getBaseUrl()}/users/money_request`, credentials, {
+        headers: new HttpHeaders().set('Content-Type', 'application/json')})
+        .subscribe((data:any) => {
+        console.log("OKAY");
+      })};
+
   ngOnInit(): void {
 
     this.getDetailUser();

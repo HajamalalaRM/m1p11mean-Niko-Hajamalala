@@ -145,7 +145,12 @@
    <app-user-manager></app-user-manager>
 </div>
 
-<!-- NOTIFICATIONS -->
+<!-- OFFRES MANAGER -->
+<div *ngIf="isRoute==='manager/offers'">
+   <app-offer-manager></app-offer-manager>
+</div>
+
+<!-- NOTIFICATIONS MANAGER -->
 <div *ngIf="isRoute==='manager/notifications'">
    <app-notification-manager></app-notification-manager>
 </div>

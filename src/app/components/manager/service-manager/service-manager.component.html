@@ -58,7 +58,7 @@
                      <tr style="text-align: center;">
                         <th>#</th>
                         <th>Name 
-                           <button *ngIf="isSubmitDeleteService" type="button" style="float: right;" (click)="cancelDeleteServ()" class="btn btn-warning">
+                           <button *ngIf="isSubmitDeleteService" type="button" style="float: right;" (click)="cancelDeleteServ()" class="btn btn-danger">
                               Cancel
                            </button>
                         </th>
@@ -68,6 +68,15 @@
                      </tr>
                   </thead>
                   <tbody *ngIf="servicesList" >
+                     <!-- <ng-container *ngIf="isSubmitUpdateService">
+                        <tr *ngFor="let serv of serviceDetail">
+                           <td></td>
+                           <td><input type="text" value="{{serv.name}}"></td>
+                           <td><input type="text" value="{{serv.durationMinute}}"></td>
+                           <td><input type="text" value="{{serv.coast}}"></td>
+                           <td><input type="submit" value="Update"></td>
+                        </tr>
+                     </ng-container> -->
                      <tr *ngFor="let service of servicesList; let i = index" style="text-align: center;">
                         <td>
                            {{ i + 1 }}
@@ -79,7 +88,7 @@
                         <td>{{ service.coast }}</td>
                         <td>
                            <div class="btn-group" role="group" aria-label="Basic example">
-                              <button type="button" class="btn btn-secondary">update</button>
+                              <button (click)="isSubmitUpdateServ(service._id)" type="button" class="btn btn-secondary">update</button>
                             </div>
                         </td>
                      </tr>

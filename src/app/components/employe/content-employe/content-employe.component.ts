@@ -94,6 +94,39 @@ export class ContentEmployeComponent implements OnInit {
       console.log(this.user);
     })};
 
+  idAppoint: string ="";
+  isSubmitPayement: boolean = false;
+  payement(id:string){
+    this.idAppoint = id;
+    this.isSubmitPayement = true;
+    this.getPayValue();
+  }
+
+  coastSum: string = "";
+  coastSum1: string = "";
+  onChangeCoastSum1(coastSum1: string){ this.coastSum1 = coastSum1; }
+
+  getPayValue() {
+    const credentials = {idappointment: this.idAppoint}
+    this.http.post(`${this.baseUrl.getBaseUrl()}/payements/waitting_payement`, credentials, {
+      headers: new HttpHeaders().set('Content-Type', 'application/json')})
+      .subscribe((data:any) => {
+      this.coastSum = data.data[0].coastSumFinal;
+      this.coastSum1 = data.data[0].coastSumFinal;
+  })};
+
+  paye() {
+    const credentials = {idappointment: this.idAppoint, pay: this.coastSum1}
+    this.http.post(`${this.baseUrl.getBaseUrl()}/payements/pay`, credentials, {
+      headers: new HttpHeaders().set('Content-Type', 'application/json')})
+      .subscribe((data:any) => {
+        console.log("PAYEMENT SUCCESSFUL...")
+        console.log(data);
+  })};
+
+  
+
+
   ngOnInit(): void {
 
     this.getDetailUser();

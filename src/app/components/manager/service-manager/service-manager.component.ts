@@ -84,7 +84,35 @@ export class ServiceManagerComponent implements OnInit {
 
   })};  
 
+//UPDATE SERVICE
+isSubmitUpdateService: boolean = false;
+idService: string = "";
+isSubmitUpdateServ(id: string){
+  this.idService = id;
+  this.isSubmitUpdateService = true;
+  // this.getDetailService();
+}
+
+updateServiceManager(idservice: string = this.service_id){
+  const credentials = {idservice: idservice}
+  this.http.post(`${this.baseUrl.getBaseUrl()}/services/updateService`, credentials, {
+    headers: new HttpHeaders().set('Content-Type', 'application/json')})
+    .subscribe((data:any) => {
+
+})};
+
+serviceDetail: any = [];
+getDetailService() {
+  const credentials = {idservice: this.idService}
+  this.http.post(`${this.baseUrl.getBaseUrl()}/services/serviceDetail`, credentials, {
+    headers: new HttpHeaders().set('Content-Type', 'application/json')})
+    .subscribe((data:any) => {
+      this.serviceDetail = data.data;
+      console.log(this.serviceDetail);
+})};  
+
   ngOnInit(): void {
     this.getListServices();
   }
+
 }

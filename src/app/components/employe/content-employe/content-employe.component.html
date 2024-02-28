@@ -108,6 +108,21 @@
             <div class="card-body">
                <h5 class="card-title">List of appointment your appointment</h5>
                <p class="card-description">There are the list of your appointment</p>
+
+               <div *ngIf="isSubmitPayement">
+                  Total : {{ coastSum}} 
+                  <!-- <input type="number" value="{{ coastSum}}"> -->
+                  <form>
+                  <input class="form-control"
+                        #selectCoastSum1
+                        type="number" 
+                        name="End"
+                        (change)="onChangeCoastSum1(selectCoastSum1.value)"
+                        value="{{coastSum}}">
+                  <input type="submit" (click)="paye()" value="Pay">
+                  </form>
+               </div>
+               
                <div class="table-responsive pt-3">
                   <table class="table table-bordered">
                   <thead>
@@ -120,6 +135,7 @@
                         <th>Date and time</th>
                         <th>Description</th>
                         <th>Status</th>
+                        <th></th>
                      </tr>
                   </thead>
                   <tbody>
@@ -152,6 +168,9 @@
                            </td>
                            <td>{{ innerAppointment.description }}</td>
                            <td>{{ innerAppointment.status }}</td>
+                           <td *ngIf="innerAppointment.status==='unpayed'">
+                              <button (click)="payement(innerAppointment._id)">pay</button>
+                           </td>
                         </tr>
                      </ng-container>
                   </tbody>
