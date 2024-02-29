@@ -3,25 +3,25 @@ import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http'
 import { Component, Injectable, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { BaseUrl } from '../../BaseUrl';
 import { CookieService } from 'ngx-cookie-service';
+import { BaseUrl } from '../../../BaseUrl';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-login-manager',
   standalone: true,
   imports: [ NgIf, FormsModule, HttpClientModule, RouterLink, ReactiveFormsModule],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  templateUrl: './login-manager.component.html',
+  styleUrl: './login-manager.component.css'
 })
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class LoginComponent implements OnInit{
+export class LoginManagerComponent implements OnInit{
 
-  email: string = "client@gmail.com";
-  password: string ="client";
+  email: string = "manager@gmail.com";
+  password: string ="manager";
   errorMessage: string="";
   isSubmited: boolean = false;
   date: string="";
@@ -89,6 +89,10 @@ export class LoginComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    
+    if(localStorage.getItem('local')){
+
+    } else {
+      this.router.navigateByUrl('/manager/login');
+    }
   }
 }

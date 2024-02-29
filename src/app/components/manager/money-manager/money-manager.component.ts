@@ -32,7 +32,7 @@ export class MoneyManagerComponent  implements OnInit {
       headers: new HttpHeaders().set('Content-Type', 'application/json')})
     .subscribe((data: any) => {
       this.transactions = data.data;
-      console.log(this.transactions);
+      // console.log(this.transactions);
     })
   }
 
@@ -41,12 +41,13 @@ export class MoneyManagerComponent  implements OnInit {
     this.http.post(`${this.baseUrl.getBaseUrl()}/users/validate_money_request`, {idtransaction:id}, {
       headers: new HttpHeaders().set('Content-Type', 'application/json')})
     .subscribe((data: any) => {
-      console.log(data);
+      // console.log(data);
+      alert('Validation of money complete!');
+      location.reload();
     })
   }
 
   ngOnInit(): void {
-    console.log("wgwgwgnwpginwpgnwpgwrg");
     this.getListTransaction();
   }
 

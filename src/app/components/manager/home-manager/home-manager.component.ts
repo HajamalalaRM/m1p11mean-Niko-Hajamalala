@@ -7,11 +7,12 @@ import { FooterComponent } from '../../footer/footer.component';
 import { CookieService } from 'ngx-cookie-service';
 import { HeaderManagerComponent } from '../header-manager/header-manager.component';
 import { ContentManagerComponent } from '../content-manager/content-manager.component';
+import { StatManagerComponent } from '../stat-manager/stat-manager.component';
 
 @Component({
   selector: 'app-home-manager',
   standalone: true,
-  imports: [ NgFor, HttpClientModule, FooterComponent, HeaderManagerComponent, ContentManagerComponent],
+  imports: [ NgFor, HttpClientModule, StatManagerComponent, FooterComponent, HeaderManagerComponent, ContentManagerComponent],
   templateUrl: './home-manager.component.html',
   styleUrl: './home-manager.component.css'
 })

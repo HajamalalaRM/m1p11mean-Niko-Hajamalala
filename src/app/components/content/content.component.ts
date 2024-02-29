@@ -18,7 +18,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 @Component({
   selector: 'app-content',
   standalone: true,
-  imports: [NgIf, NgFor, FormsModule, RouterLink, NotificationComponent, ServiceComponent, PreferenceComponent],
+  imports: [DragDropModule, NgIf, NgFor, FormsModule, RouterLink, NotificationComponent, ServiceComponent, PreferenceComponent],
   templateUrl: './content.component.html',
   styleUrl: './content.component.css'
 })
@@ -31,9 +31,9 @@ export class ContentComponent implements OnInit {
 
   items = ['Item 1', 'Item 2', 'Item 3', 'Item 4'];
 
-  onDrop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.items, event.previousIndex, event.currentIndex);
-  }
+  // onDrop(event: CdkDragDrop<string[]>) {
+  //   moveItemInArray(this.items, event.previousIndex, event.currentIndex);
+  // }
 
   isRoute: string = '';
   errorMessage: string = "";
@@ -65,14 +65,19 @@ export class ContentComponent implements OnInit {
     private preferenceService: PreferenceComponent){}
 
 
+    
   // LIST OF SERVICES
   getListServices(){
     this.http.get(`${this.baseUrl.getBaseUrl()}/services/list`, {
       headers: new HttpHeaders().set('Content-Type', 'application/json')})
     .subscribe((data: any) => {
       this.services = data.services;
+      
       // console.log(JSON.stringify(this.services));
     })
+  }
+  onDrop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.services, event.previousIndex, event.currentIndex);
   }
 
   getListOfAppointments(){
@@ -92,10 +97,11 @@ export class ContentComponent implements OnInit {
       headers: new HttpHeaders().set('Content-Type', 'application/json')})
     .subscribe((data: any) => {
       this.appointmentsById = data.userappointments;
-      console.log(data.userappointments)
+      // console.log(data.userappointments)
     })};
 
   getEmployNotBusy(){
+    // console.log(this.datetime);
     this.getListServices();
     this.get_user_available_by_datetime(this.datetime);
   }
@@ -123,7 +129,7 @@ export class ContentComponent implements OnInit {
       this.http.post(`${this.baseUrl.getBaseUrl()}/appointments/add`, credentials, {
         headers: new HttpHeaders().set('Content-Type', 'application/json')})
       .subscribe((data: any) => {
-        console.log(data);
+        // console.log(data);
         location.reload();
       })
     this.router.navigateByUrl('/appointments');
@@ -155,8 +161,10 @@ export class ContentComponent implements OnInit {
     onChangeCoast(coast: string){ this.coast = coast; }
 
     ask_compte(){
-      console.log(this.coast) 
+      // console.log(this.coast) 
       this.postMoneyRequest();
+      alert("ASK MONEY SUCCESSFUL!")
+      location.reload();
       
     }
 
@@ -166,7 +174,7 @@ export class ContentComponent implements OnInit {
       this.http.post(`${this.baseUrl.getBaseUrl()}/users/money_request`, credentials, {
         headers: new HttpHeaders().set('Content-Type', 'application/json')})
         .subscribe((data:any) => {
-        console.log("OKAY");
+        // console.log("OKAY");
       })};
 
   //PAYEMENT
@@ -194,12 +202,17 @@ export class ContentComponent implements OnInit {
 
   paye() {
     let local = localStorage.getItem('local')?.toString();
+// <<<<<<< HEAD
     const credentials = {idappointment: this.idAppoint, pay: this.coastSum1, iduser: local}
+// =======
+    // const credentials = {idappointment: this.idAppoint, pay: this.coastSum1, iduser:local}
+
+// >>>>>>> 706e163b8bc472c84f3f6dd8844ef58f2b8ef319
     this.http.post(`${this.baseUrl.getBaseUrl()}/payements/online_payement`, credentials, {
       headers: new HttpHeaders().set('Content-Type', 'application/json')})
       .subscribe((data:any) => {
-        console.log("PAYEMENT SUCCESSFUL...")
-        console.log(data);
+        alert('Payement successful!');
+        location.reload();
   })};
 
   ngOnInit(): void {

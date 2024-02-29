@@ -41,6 +41,10 @@ export class HomeComponent implements OnInit{
     }
 
   ngOnInit(): void {
+    if(localStorage.getItem('local')){
 
+    } else {
+      this.router.navigateByUrl('/login');
+    }
   }
 }

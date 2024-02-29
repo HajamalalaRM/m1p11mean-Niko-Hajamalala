@@ -14,6 +14,7 @@
                         <th>Name</th>
                         <th>Delay (min)</th>
                         <th>Price ($)</th>
+                        <th>Commission (%)</th>
                      </tr>
                   </thead>
                   <tbody *ngIf="servicesList" >
@@ -22,6 +23,7 @@
                         <td>{{ service['name'] }}</td>
                         <td>{{ service['durationMinute'] }}</td>
                         <td>{{ service['coast'] }}</td>
+                        <td>{{ service['commission'] }}</td>
                      </tr>
                   </tbody>
                </table>
