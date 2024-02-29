@@ -193,7 +193,8 @@ export class ContentComponent implements OnInit {
   })};
 
   paye() {
-    const credentials = {idappointment: this.idAppoint, pay: this.coastSum1}
+    let local = localStorage.getItem('local')?.toString();
+    const credentials = {idappointment: this.idAppoint, pay: this.coastSum1, iduser: local}
     this.http.post(`${this.baseUrl.getBaseUrl()}/payements/online_payement`, credentials, {
       headers: new HttpHeaders().set('Content-Type', 'application/json')})
       .subscribe((data:any) => {
