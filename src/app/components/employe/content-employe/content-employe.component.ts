@@ -80,7 +80,7 @@ export class ContentEmployeComponent implements OnInit {
       headers: new HttpHeaders().set('Content-Type', 'application/json')})
     .subscribe((data: any) => {
       this.appointmentsById = data.userappointments;
-      console.log(this.appointmentsById);
+      // console.log(this.appointmentsById);
     })};
 
 
@@ -91,7 +91,7 @@ export class ContentEmployeComponent implements OnInit {
       headers: new HttpHeaders().set('Content-Type', 'application/json')})
       .subscribe((data:any) => {
       this.user = data.employedetails;
-      console.log(this.user);
+      // console.log(this.user);
     })};
 
   idAppoint: string ="";
@@ -120,17 +120,33 @@ export class ContentEmployeComponent implements OnInit {
     this.http.post(`${this.baseUrl.getBaseUrl()}/payements/pay`, credentials, {
       headers: new HttpHeaders().set('Content-Type', 'application/json')})
       .subscribe((data:any) => {
-        console.log("PAYEMENT SUCCESSFUL...")
-        console.log(data);
+        // console.log("PAYEMENT SUCCESSFUL...")
+        // console.log(data);
   })};
 
-  
+  //SEARCH
+  description1: string = "";
+  searchs: any = [];
+  isSubmitSearch: boolean = false;
 
+  onChangeDescription(description: string){ this.description1 = description; }
+  search_description(){
+    this.isSubmitSearch = true;
+    let iduser = localStorage.getItem('local');
+    const credentials = { search: this.description1, iduser: iduser}
+    this.http.post(`${this.baseUrl.getBaseUrl()}/appointments/search/description`, credentials, {
+      headers: new HttpHeaders().set('Content-Type', 'application/json')})
+      .subscribe((data:any) => {
+        this.searchs = data.dataSearch;
+        // console.log(data);
+
+  })}
 
   ngOnInit(): void {
 
     this.getDetailUser();
     this.getListOfAppointmentsByCustomerID();
+    // this.search_description();
 
 // DATE NOW
     setInterval(() => {

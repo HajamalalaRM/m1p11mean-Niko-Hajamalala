@@ -27,7 +27,7 @@ export class ServiceManagerComponent implements OnInit {
       headers: new HttpHeaders().set('Content-Type', 'application/json')})
     .subscribe((data: any) => {
       this.servicesList = data.services;
-      console.log(this.servicesList)
+      // console.log(this.servicesList)
     })
   }
 
@@ -108,7 +108,7 @@ getDetailService() {
     headers: new HttpHeaders().set('Content-Type', 'application/json')})
     .subscribe((data:any) => {
       this.serviceDetail = data.data;
-      console.log(this.serviceDetail);
+      // console.log(this.serviceDetail);
 })};  
 
   ngOnInit(): void {

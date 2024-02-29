@@ -10,11 +10,12 @@ import { NotificationManagerComponent } from '../notification-manager/notificati
 import { PreferenceManagerComponent } from '../preference-manager/preference-manager.component';
 import { ServiceManagerComponent } from '../service-manager/service-manager.component';
 import { UserManagerComponent } from '../user-manager/user-manager.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-offer-manager',
   standalone: true,
-  imports: [NgIf, NgFor, FormsModule, RouterLink, ServiceManagerComponent, NotificationManagerComponent, PreferenceManagerComponent, HeaderManagerComponent, UserManagerComponent],
+  imports: [NgIf, NgFor, MatIconModule, FormsModule, RouterLink, ServiceManagerComponent, NotificationManagerComponent, PreferenceManagerComponent, HeaderManagerComponent, UserManagerComponent],
   templateUrl: './offer-manager.component.html',
   styleUrl: './offer-manager.component.css'
 })
@@ -35,7 +36,7 @@ export class OfferManagerComponent implements OnInit {
       headers: new HttpHeaders().set('Content-Type', 'application/json')})
     .subscribe((data: any) => {
       this.offers = data.offers;
-      console.log(this.offers);
+      // console.log(this.offers);
     });
   }
 
@@ -61,6 +62,10 @@ export class OfferManagerComponent implements OnInit {
   isSubmitNewOffer(){
     this.isSubmitNewOff = true;
   }
+
+  cancel(){
+    location.reload();
+  }
   
   onChangeName(name: string){ this.name = name; }
   onChangePercentage(percentage: string){ this.percentage = percentage; }
@@ -73,20 +78,31 @@ export class OfferManagerComponent implements OnInit {
       const index = this.checkedValues.indexOf(serviceId);
       if(index !== -1){
         this.checkedValues.splice(index, 1);
-        console.log(this.checkedValues.splice(index, 1))
+        // console.log(this.checkedValues.splice(index, 1))
       }
     }
   }
 
+
   add_offer() {
     const credentials = {services:this.checkedValues, start:this.start, end:this.end, percentage:this.percentage, name:this.name}
-      this.http.post(`${this.baseUrl.getBaseUrl()}/offers/add`, credentials, {
-        headers: new HttpHeaders().set('Content-Type', 'application/json')})
-      .subscribe((data: any) => {
-        console.log(data);
+      // console.log(credentials);
+      // console.log(this.checkedValues);
+      // console.log(this.start);
+      // console.log(this.end);
+      // console.log(this.percentage);
+      // console.log(this.name);
+      if(this.checkedValues.length===0 || this.start==="" || this.end==="" || this.percentage==="" || this.name===""){
         location.reload();
-      })
-    this.router.navigateByUrl('manager/offers');
+      } else {
+        this.http.post(`${this.baseUrl.getBaseUrl()}/offers/add`, credentials, {
+          headers: new HttpHeaders().set('Content-Type', 'application/json')})
+        .subscribe((data: any) => {
+          // console.log(data);
+          location.reload();
+        })
+      this.router.navigateByUrl('manager/offers');
+      }
   }
 
   ngOnInit(): void {

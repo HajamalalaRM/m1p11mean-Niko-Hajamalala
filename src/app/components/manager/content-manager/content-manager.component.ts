@@ -11,12 +11,13 @@ import { NotificationManagerComponent } from '../notification-manager/notificati
 import { OfferManagerComponent } from '../offer-manager/offer-manager.component';
 import { PreferenceManagerComponent } from '../preference-manager/preference-manager.component';
 import { ServiceManagerComponent } from '../service-manager/service-manager.component';
+import { StatManagerComponent } from '../stat-manager/stat-manager.component';
 import { UserManagerComponent } from '../user-manager/user-manager.component';
 
 @Component({
   selector: 'app-content-manager',
   standalone: true,
-  imports: [NgIf, NgFor, FormsModule, RouterLink, ServiceManagerComponent, NotificationManagerComponent, PreferenceManagerComponent, HeaderManagerComponent, UserManagerComponent, OfferManagerComponent, MoneyManagerComponent],
+  imports: [NgIf, NgFor, StatManagerComponent, FormsModule, RouterLink, ServiceManagerComponent, NotificationManagerComponent, PreferenceManagerComponent, HeaderManagerComponent, UserManagerComponent, OfferManagerComponent, MoneyManagerComponent],
   templateUrl: './content-manager.component.html',
   styleUrl: './content-manager.component.css'
 })
@@ -142,6 +143,9 @@ export class ContentManagerComponent implements OnInit {
         this.isRoute = urlSegment[0]+'/'+urlSegment[1];
       }
       if(urlSegment[0]+'/'+urlSegment[1]==='manager/offers'){
+        this.isRoute = urlSegment[0]+'/'+urlSegment[1];
+      }
+      if(urlSegment[0]+'/'+urlSegment[1]==='manager/stats'){
         this.isRoute = urlSegment[0]+'/'+urlSegment[1];
       }
       if(urlSegment[0]+'/'+urlSegment[1]==='manager/moneys'){

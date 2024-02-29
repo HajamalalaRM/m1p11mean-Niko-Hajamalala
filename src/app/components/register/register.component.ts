@@ -27,13 +27,13 @@ export class RegisterComponent implements OnInit {
   constructor(private baseUrl: BaseUrl, private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute){}
   
   onSubmit(){
-    console.log("NAME : "+this.name);
-    console.log("FIRSTNAME : "+this.firstname);
-    console.log("EMAIL : "+this.email);
-    console.log("CONTACT : "+this.contact);
-    console.log("ROLE : "+this.role);
-    console.log("PASSWORD : "+this.password);
-    console.log("CONFIRM-PASSWORD : "+this.confirmpassword);
+    // console.log("NAME : "+this.name);
+    // console.log("FIRSTNAME : "+this.firstname);
+    // console.log("EMAIL : "+this.email);
+    // console.log("CONTACT : "+this.contact);
+    // console.log("ROLE : "+this.role);
+    // console.log("PASSWORD : "+this.password);
+    // console.log("CONFIRM-PASSWORD : "+this.confirmpassword);
 
     const credentials = {
       name: this.email,
@@ -46,7 +46,7 @@ export class RegisterComponent implements OnInit {
 
     if(this.name==="" || this.firstname==="" || this.email==="" || this.password==="" || this.confirmpassword==="" || this.contact===""){
       this.errorMessage = 'need_complete';
-      console.log(this.errorMessage)
+      // console.log(this.errorMessage)
       this.router.navigateByUrl('/register');
       
     } else {

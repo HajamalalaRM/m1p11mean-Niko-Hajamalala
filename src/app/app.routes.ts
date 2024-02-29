@@ -1,13 +1,17 @@
 import { Routes } from '@angular/router';
 import { HomeEmployeComponent } from './components/employe/home-employe/home-employe.component';
+import { LoginEmployeComponent } from './components/employe/login-employe/login-employe.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeManagerComponent } from './components/manager/home-manager/home-manager.component';
+import { LoginManagerComponent } from './components/manager/login-manager/login-manager.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { RegisterComponent } from './components/register/register.component';
 
 export const routes: Routes = [
    { path: 'login', component: LoginComponent },
+   { path: 'employe/login', component: LoginEmployeComponent },
+   { path: 'manager/login', component: LoginManagerComponent },
    { path: 'register', component: RegisterComponent },
    
    { path: 'home', component: HomeComponent },
@@ -27,6 +31,7 @@ export const routes: Routes = [
    { path: 'manager/notifications', component: HomeManagerComponent },
    { path: 'manager/users', component: HomeManagerComponent },
    { path: 'manager/offers', component: HomeManagerComponent },
+   { path: 'manager/stats', component: HomeManagerComponent },
    { path: 'manager/moneys', component: HomeManagerComponent },
    
 

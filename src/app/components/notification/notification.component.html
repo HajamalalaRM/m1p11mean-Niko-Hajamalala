@@ -1,41 +1,74 @@
 
 <div class="row">
    <div class="col-md-12 stretch-card grid-margin">
+      <div *ngFor="let offer of offers"><br/>
+         <div class="card">
+            <div class="card-body">
+               <ul class="icon-data-list" style="text-align: center; align-items: center;">
+                  <div class="d-flex">
+                     <div class="col-md-3">
+                        <h3 class="text-info">{{ offer.name }}</h3>
+                     </div>
+                     <div class="col-md-3">
+                        <p *ngFor="let service of offer.services_concerned">{{ service.name }}</p>
+                     </div>
+                     <div class="col-md-2"><br/>
+                        <h3 style="color: green;"> - {{ offer.percentage }} %</h3>
+                     </div>
+                     <div class="col-md-4">
+                        <p><b>Begin  : &nbsp; </b> {{ offer.start.substring(0,10)}} - {{ offer.start.substring(11,16) }}</p>
+                        <p><b>Finish : &nbsp; </b> {{ offer.end.substring(0,10) }} - {{ offer.end.substring(11,16) }}</p>
+                     </div>
+                  </div>
+               </ul>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<br/>
+
+<!-- LIST OFFERS IN CLIENT -->
+<div class="row">
+   <div class="col-md-12 grid-margin stretch-card">
       <div class="card">
          <div class="card-body">
-            <h5 class="card-title">Notifications</h5>
-            <ul class="icon-data-list">
-               <li>
-               <div class="d-flex">
-                  <!-- <img src="images/faces/face1.jpg" alt="user"> -->
-                  <div>
-                     <p class="text-info mb-1">Isabella Becker</p>
-                     <p class="mb-0">Sales dashboard have been created</p>
-                     <small>9:30 am</small>
-                  </div>
-               </div>
-               </li>
-               <li>
-               <div class="d-flex">
-                  <!-- <img src="images/faces/face2.jpg" alt="user"> -->
-                  <div>
-                     <p class="text-info mb-1">Adam Warren</p>
-                     <p class="mb-0">You have done a great job #TW111</p>
-                     <small>10:30 am</small>
-                  </div>
-               </div>
-               </li>
-               <li>
-               <div class="d-flex">
-               <!-- <img src="images/faces/face3.jpg" alt="user"> -->
-               <div>
-               <p class="text-info mb-1">Leonard Thornton</p>
-               <p class="mb-0">Sales dashboard have been created</p>
-               <small>11:30 am</small>
-               </div>
-               </div>
-               </li>
-            </ul>
+            <h5 class="card-title">List of all offers</h5>
+            <p class="card-description">There are the list of all offers</p>
+            
+            <div class="table-responsive pt-3">
+               <table class="table table-bordered">
+               <thead>
+                  <tr>
+                     <th>Name offers</th>
+                     <th>Percentage</th>
+                     <th>Services</th>
+                     <th>Delay (min)</th>
+                     <th>Price ($)</th>
+                     <th>Date and time</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr *ngFor="let offer of offers">
+                     <td>{{ offer.name }}</td>
+                     <td>{{ offer.percentage }}</td>
+                     <td>
+                        <li *ngFor="let service of offer.services_concerned">{{ service.name }}</li>
+                     </td>
+                     <td>
+                        <li *ngFor="let service of offer.services_concerned">{{ service.durationMinute }}</li>
+                     </td>
+                     <td>
+                        <li *ngFor="let service of offer.services_concerned">{{ service.coast }}</li>
+                     </td>
+                     <td>
+                        <p><b>Begin  : &nbsp; </b> {{ offer.start.substring(0,10)}} - {{ offer.start.substring(11,16) }}</p>
+                        <p><b>Finish : &nbsp; </b> {{ offer.end.substring(0,10) }} - {{ offer.end.substring(11,16) }}</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
          </div>
       </div>
    </div>

@@ -112,7 +112,7 @@ export class PreferenceComponent implements OnInit {
 
   serviceId: string = "";
   services: any = [];
-  onChangeServ(str: string){ this.serviceId = str; console.log(this.serviceId) }
+  onChangeServ(str: string){ this.serviceId = str; }
   getListServices(){
     this.http.get(`${this.baseUrl.getBaseUrl()}/services/list`, {
       headers: new HttpHeaders().set('Content-Type', 'application/json')})
@@ -143,13 +143,13 @@ export class PreferenceComponent implements OnInit {
 
   employeId: string = "";
   employes: any = [];
-  onChangeEmp(str: string){ this.employeId = str; console.log(this.employeId) }
+  onChangeEmp(str: string){ this.employeId = str; }
   getListEmployes(){
     this.http.get(`${this.baseUrl.getBaseUrl()}/users/employes`, {
       headers: new HttpHeaders().set('Content-Type', 'application/json')})
     .subscribe((data: any) => {
       this.employes = data.users;
-      console.log(this.employes);
+      // console.log(this.employes);
     })
   }
 

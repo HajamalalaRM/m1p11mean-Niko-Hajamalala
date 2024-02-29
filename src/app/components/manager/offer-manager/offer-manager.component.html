@@ -6,10 +6,54 @@
             <h5 class="card-title">List of all offers</h5>
             <p class="card-description">There are the list of all offers</p>
             
-            <div class="row">
+            <div *ngIf="isSubmitNewOff" class="row">
                <form class="forms-sample">
+
+                  <div class="row">
+                     <div class="col-md-3">
+                        <label for="exampleFormControlTextarea1">Name :</label>
+                        <input class="form-control"
+                           #selectName
+                           type="text" 
+                           name="Name"
+                           (change)="onChangeName(selectName.value)"
+                           placeholder="Enter a Name of offer..."
+                        >
+                     </div>
+                     <div class="col-md-3">
+                        <label for="exampleFormControlTextarea2">Percentage :</label>
+                        <input class="form-control"
+                           #selectPercentage
+                           type="number" 
+                           name="Percentage"
+                           (change)="onChangePercentage(selectPercentage.value)"
+                           placeholder="Enter a Percentage of offer..."
+                        >
+                     </div>
+                     <div class="col-md-3">
+                        <label for="exampleFormControlTextarea3">Start :</label>
+                        <input class="form-control"
+                           #selectStart
+                           type="datetime-local" 
+                           name="Start"
+                           (change)="onChangeStart(selectStart.value)"
+                           placeholder="Enter a Start of offer..."
+                        >
+                     </div>
+                     <div class="col-md-3">
+                        <label for="exampleFormControlTextarea4">End :</label>
+                        <input class="form-control"
+                           #selectEnd
+                           type="datetime-local" 
+                           name="End"
+                           (change)="onChangeEnd(selectEnd.value)"
+                           placeholder="Enter a End of offer..."
+                        >
+                     </div>
+                  </div>
+                  <br/>
                   <div class="form-group">
-                     <label for="exampleFormControlSelect1">Services :</label>
+                     <label for="exampleFormControlSelect1">Choose the services :</label>
                      <div class="table-responsive pt-3">
                         <table class="table table-bordered">
                            <thead>
@@ -42,58 +86,23 @@
                   </div>
 
                   <br/>
-                  <div class="form-group">
-                     <label for="exampleFormControlTextarea1">Name :</label>
-                     <input class="form-control"
-                        #selectName
-                        type="text" 
-                        name="Name"
-                        (change)="onChangeName(selectName.value)"
-                        placeholder="Enter a Name of offer...">
-                  </div>
-                  <br/>
-                  <div class="form-group">
-                     <label for="exampleFormControlTextarea2">Percentage :</label>
-                     <input class="form-control"
-                        #selectPercentage
-                        type="number" 
-                        name="Percentage"
-                        (change)="onChangePercentage(selectPercentage.value)"
-                        placeholder="Enter a Percentage of offer...">
-                  </div>
-                  <br/>
-                  <div class="form-group">
-                     <label for="exampleFormControlTextarea3">Start :</label>
-                     <input class="form-control"
-                        #selectStart
-                        type="datetime-local" 
-                        name="Start"
-                        (change)="onChangeStart(selectStart.value)"
-                        placeholder="Enter a Start of offer...">
-                  </div>
-                  <br/>
-                  <div class="form-group">
-                     <label for="exampleFormControlTextarea4">End :</label>
-                     <input class="form-control"
-                        #selectEnd
-                        type="datetime-local" 
-                        name="End"
-                        (change)="onChangeEnd(selectEnd.value)"
-                        placeholder="Enter a End of offer...">
-                  </div>
-                  <br/>
+
                   <div class="row" style="float: right;">
                      <div>
                         <button (click)="add_offer()" type="submit" class="btn btn-success mr-2">Add</button>
-                        <button routerLink="/home" class="btn btn-light">Cancel</button>
+                        <button (click)="cancel()" class="btn btn-light">Cancel</button>
                      </div>
                   </div>
                </form>
             </div>
-
+            <div>
+            </div>
+            
             <br>
             
             <div class="table-responsive pt-3">
+               <button *ngIf="isSubmitNewOff===false" (click)="isSubmitNewOffer()" style="float: right;" type="submit" class="btn btn-success mr-2">New offer</button>
+               <br/><br/>
                <table class="table table-bordered">
                <thead>
                   <tr>
@@ -106,25 +115,23 @@
                   </tr>
                </thead>
                <tbody>
-                  <!-- <ng-container *ngFor="let user of offers"> -->
-                     <tr *ngFor="let offer of offers">
-                        <td>{{ offer.name }}</td>
-                        <td>{{ offer.percentage }}</td>
-                        <td>
-                           <li *ngFor="let service of offer.services_concerned">{{ service.name }}</li>
-                        </td>
-                        <td>
-                           <li *ngFor="let service of offer.services_concerned">{{ service.durationMinute }}</li>
-                        </td>
-                        <td>
-                           <li *ngFor="let service of offer.services_concerned">{{ service.coast }}</li>
-                        </td>
-                        <td>
-                           <p><b>Begin  : &nbsp; </b> {{ offer.start.substring(0,10)}} - {{ offer.start.substring(11,16) }}</p>
-                           <p><b>Finish : &nbsp; </b> {{ offer.end.substring(0,10) }} - {{ offer.end.substring(11,16) }}</p>
-                        </td>
-                     </tr>
-                  <!-- </ng-container> -->
+                  <tr *ngFor="let offer of offers">
+                     <td>{{ offer.name }}</td>
+                     <td>{{ offer.percentage }}</td>
+                     <td>
+                        <li *ngFor="let service of offer.services_concerned">{{ service.name }}</li>
+                     </td>
+                     <td>
+                        <li *ngFor="let service of offer.services_concerned">{{ service.durationMinute }}</li>
+                     </td>
+                     <td>
+                        <li *ngFor="let service of offer.services_concerned">{{ service.coast }}</li>
+                     </td>
+                     <td>
+                        <p><b>Begin  : &nbsp; </b> {{ offer.start.substring(0,10)}} - {{ offer.start.substring(11,16) }}</p>
+                        <p><b>Finish : &nbsp; </b> {{ offer.end.substring(0,10) }} - {{ offer.end.substring(11,16) }}</p>
+                     </td>
+                  </tr>
                </tbody>
             </table>
          </div>

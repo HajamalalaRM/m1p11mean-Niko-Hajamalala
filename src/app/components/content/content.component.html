@@ -9,6 +9,10 @@
             <!-- <div cdkDropList (cdkDropListDropped)="onDrop($event)">
                <div *ngFor="let item of items" cdkDrag>{{ item }}</div>
              </div> -->
+             <!-- <div class="example-box" cdkDrag>
+               Drag me around
+             </div> -->
+
             <div class="col-12 col-xl-8 mb-4 mb-xl-0">
                <h3 class="font-weight-bold">Welcome {{ user.name }} </h3>
                <h6 class="font-weight-normal mb-0">All systems are running smoothly! Good luck to you and have fun with <span class="text-primary"> " MAGNIFICIENCE "</span></h6>
@@ -21,19 +25,26 @@
                      </button>
                   </div>
                   <br/>
-                  <div class="form-group">
-                  <form>
-                     <label for="exampleFormControlTextarea6">COMPTE : {{ user.compte }}</label>
-                     <input class="form-control"
-                        #selectCoast
-                        type="number" 
-                        name="coast"
-                        (change)="onChangeCoast(selectCoast.value)"
-                        placeholder="Enter a Coast of offer..."
-                     >
-                     <input type="submit" (click)="ask_compte()" value="Ask">
-                  </form>
-               </div>
+                  <div class="row" class="example-box" cdkDrag>
+                     <!-- <div class="col-md-12 stretch-card"> -->
+                        <div class="card">
+                           <div class="card-body">
+                              <h5 class="card-title">COMPTE : {{ user.compte }} $</h5>
+                              <form>
+                                 <input class="form-control"
+                                    #selectCoast
+                                    type="number" 
+                                    name="coast"
+                                    (change)="onChangeCoast(selectCoast.value)"
+                                    placeholder="Increase..."
+                                 >
+                                 <br/>
+                                 <input type="submit" (click)="ask_compte()" class="btn btn-success form-control" value="Ask">
+                              </form>
+                           </div>
+                        </div>
+                     <!-- </div> -->
+                  </div>
                </div>
             </div>
          </div>
@@ -53,24 +64,37 @@
                      <h5 class="card-title">List of your appointment</h5>
                      <p class="card-description">There are the list of your appointment</p>
 
-                     <div *ngIf="isSubmitPayement">
-                        Total : {{ coastSum}} 
-                        <!-- <input type="number" value="{{ coastSum}}"> -->
-                        <form>
-                        <input class="form-control"
-                              #selectCoastSum1
-                              type="number" 
-                              name="End"
-                              (change)="onChangeCoastSum1(selectCoastSum1.value)"
-                              value="{{coastSum}}">
-                        <input type="submit" (click)="paye()" value="Pay">
-                        </form>
-                     </div>
+                     <div *ngIf="isSubmitPayement" class="example-box" cdkDrag>
+                        <!-- I can only be dragged using the handle -->
+                        <div class="col-md-8 stretch-card">
+                           <div class="card">
+                              <div class="card-body">
+                                 <h5 class="card-title">TOTAL : {{ coastSum}} $</h5>
+                                 <form>
+                                    <input class="form-control"
+                                       #selectCoastSum1
+                                       type="number" 
+                                       name="coastSum1"
+                                       (change)="onChangeCoastSum1(selectCoastSum1.value)"
+                                       value="{{coastSum}}"><br/>
+                                    <input type="submit" (click)="paye()" class="btn btn-success form-control" style="float: right;" value="Pay">
+                                 </form>
+                              </div>
+                           </div>
+                        </div>
+                      
+                        <div class="example-handle" cdkDragHandle>
+                          <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
+                            <path d="M0 0h24v24H0z" fill="none"></path>
+                          </svg>
+                        </div>
+                      </div>
 
                   </div>
                   <div class="col-md-2">
                      <h5 class="card-title"></h5>
-                     <button routerLink="/appointments" class="btn btn-warning boutton-clignote">Add new appointment</button>
+                     <button routerLink="/appointments" class="btn btn-warning">Add new appointment</button>
                   </div>
                </div>
 
@@ -86,14 +110,15 @@
                            <th>Employe</th>
                            <th>Description</th>
                            <th>Status</th>
+                           <th></th>
                         </tr>
                      </thead>
                      <tbody>
-                        <ng-container *ngFor="let appointment of appointmentsById">
-                           <tr *ngFor="let innerAppointment of appointment.userappointments; let i = index">
+                        <ng-container *ngFor="let appointment of appointmentsById" >
+                           <tr *ngFor="let innerAppointment of appointment.userappointments; let i = index" cdkDrag>
                               <td>{{ i + 1 }}</td>
                               <td>
-                                 <li *ngFor="let service of innerAppointment.serviceDetails">{{ service.name }}</li>
+                                 <li *ngFor="let service of innerAppointment.serviceDetails" cdkDrag >{{ service.name }}</li>
                                </td>
                                <td>
                                  <li *ngFor="let service of innerAppointment.serviceDetails">{{ service.coast }}</li>
@@ -110,8 +135,12 @@
                               </td>
                               <td>{{ innerAppointment.description }}</td>
                               <td>{{ innerAppointment.status }}</td>
-                              <td>
-                                 <button (click)="payement(innerAppointment._id)">pay</button>
+                              <td *ngIf="innerAppointment.status==='unpayed' || innerAppointment.status==='in progress'">
+                                 <button *ngIf="isSubmitPayement===false" (click)="payement(innerAppointment._id)" class="btn btn-success">pay</button>
+                                 <button *ngIf="isSubmitPayement" (click)="payement(innerAppointment._id)" class="btn btn-success" disabled>pay</button>
+                              </td>
+                              <td *ngIf="innerAppointment.status==='payed'">
+                                 <button class="btn btn-danger" disabled>payed</button>
                               </td>
                            </tr>
                         </ng-container>
@@ -192,7 +221,7 @@
                   </div>   
                   <br/>
                   <div class="form-group">
-                     <label for="exampleFormControlSelect1">Services :</label>
+                     <label for="exampleFormControlSelect1">Check the services :</label>
                      <div class="table-responsive pt-3">
                         <table class="table table-bordered">
                            <thead>
@@ -205,20 +234,20 @@
                               </tr>
                            </thead>
                            <tbody>
-                              <tr *ngFor="let service of services; let i = index">
-                                 <td>{{ i+1 }}</td>
-                                 <td>{{ service['name'] }}</td>
-                                 <td>{{ service['durationMinute'] }}</td>
-                                 <td>{{ service['coast'] }}</td>
-                                 <td  style="text-align: center;">
-                                    <input 
-                                       type="checkbox" 
-                                       (change)="onChangeService($event, service['_id'])" 
-                                       [checked]="checkedValues.includes(service['_id'])" 
-                                       [value]="service['_id']"
-                                       name="servicesId">
-                                 </td>
-                              </tr>
+                                 <tr *ngFor="let service of services; let i = index">
+                                    <td>{{ i+1 }}</td>
+                                    <td>{{ service['name'] }}</td>
+                                    <td>{{ service['durationMinute'] }}</td>
+                                    <td>{{ service['coast'] }}</td>
+                                    <td  style="text-align: center;">
+                                       <input 
+                                          type="checkbox" 
+                                          (change)="onChangeService($event, service['_id'])" 
+                                          [checked]="checkedValues.includes(service['_id'])" 
+                                          [value]="service['_id']"
+                                          name="servicesId">
+                                    </td>
+                                 </tr>
                            </tbody>
                         </table>
                      </div>
